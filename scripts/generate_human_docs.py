@@ -807,35 +807,35 @@ def add_slide_header(slide, title_text, category_text="BLUESTOCK MUTUAL FUND ANA
     tf_cat.word_wrap = True
     p_cat = tf_cat.paragraphs[0]
     p_cat.text = category_text.upper()
-    p_cat.font.name = 'Trebuchet MS'
-    p_cat.font.size = Pt(9)
+    p_cat.font.name = 'Calibri'
+    p_cat.font.size = Pt(8.5)
     p_cat.font.bold = True
-    p_cat.font.color.rgb = RGBColor(0, 229, 255) # Cyan Accent
+    p_cat.font.color.rgb = RGBColor(120, 120, 120) # Muted gray
 
     # Main Title
-    title_box = slide.shapes.add_textbox(Inches(0.75), Inches(0.65), Inches(11.83), Inches(0.8))
+    title_box = slide.shapes.add_textbox(Inches(0.75), Inches(0.55), Inches(11.83), Inches(0.8))
     tf_title = title_box.text_frame
     tf_title.word_wrap = True
     p_title = tf_title.paragraphs[0]
     p_title.text = title_text
-    p_title.font.name = 'Trebuchet MS'
-    p_title.font.size = Pt(28)
+    p_title.font.name = 'Georgia'
+    p_title.font.size = Pt(26)
     p_title.font.bold = True
-    p_title.font.color.rgb = RGBColor(255, 255, 255) # White
+    p_title.font.color.rgb = RGBColor(0, 0, 0) # Black
 
     # Thin separator line
-    line = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.75), Inches(1.4), Inches(11.83), Inches(0.02))
+    line = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.75), Inches(1.3), Inches(11.83), Inches(0.015))
     line.fill.solid()
-    line.fill.fore_color.rgb = RGBColor(30, 34, 53)
+    line.fill.fore_color.rgb = RGBColor(210, 210, 210) # Light grey line
     line.line.fill.background()
 
-def create_card_shape(slide, left, top, width, height, bg_color=RGBColor(30, 34, 53)):
+def create_card_shape(slide, left, top, width, height, bg_color=RGBColor(248, 250, 252)):
     card = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, left, top, width, height)
     card.fill.solid()
     card.fill.fore_color.rgb = bg_color
-    # 1.5pt solid border with a slightly lighter color
-    card.line.color.rgb = RGBColor(58, 64, 90)
-    card.line.width = Pt(1.5)
+    # Thin light grey border
+    card.line.color.rgb = RGBColor(220, 224, 230)
+    card.line.width = Pt(1.0)
     return card
 
 def build_pptx(filename):
@@ -845,111 +845,101 @@ def build_pptx(filename):
     prs.slide_width = Inches(13.333)
     prs.slide_height = Inches(7.5)
     
-    # Custom Presentation Color Palette
-    bg_dark = RGBColor(11, 14, 20)        # Deep Carbon canvas
-    card_charcoal = RGBColor(30, 34, 53)  # Charcoal cards
-    text_white = RGBColor(255, 255, 255)  # Clean white
-    text_silver = RGBColor(176, 190, 197) # Muted text
-    accent_cyan = RGBColor(0, 229, 255)   # Cyan
-    accent_green = RGBColor(0, 230, 118)  # Green accent
+    # Monochrome Palette
+    bg_white = RGBColor(255, 255, 255)
+    card_light = RGBColor(248, 250, 252)
+    text_black = RGBColor(0, 0, 0)
+    text_charcoal = RGBColor(51, 65, 85) # Slate/charcoal
+    text_gray = RGBColor(120, 120, 120)
+    accent_dark = RGBColor(40, 44, 55)
     
     blank_layout = prs.slide_layouts[6]
     
     # ==================================================================
-    # SLIDE 1: COVER SLIDE
+    # SLIDE 1: COVER SLIDE (Urban Monochrome Split Layout)
     # ==================================================================
     slide = prs.slides.add_slide(blank_layout)
-    apply_slide_background(slide, bg_dark)
+    apply_slide_background(slide, bg_white)
     
-    # Background accents
-    rect_top = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0), Inches(0), Inches(13.333), Inches(0.35))
-    rect_top.fill.solid()
-    rect_top.fill.fore_color.rgb = card_charcoal
-    rect_top.line.fill.background()
+    # Left Side: Insert the template visual (concrete stairs)
+    img_path = str(PROJECT_ROOT / "reports" / "urban_stairs.png")
+    if os.path.exists(img_path):
+        slide.shapes.add_picture(img_path, Inches(0), Inches(0), Inches(5.4), Inches(7.5))
+    else:
+        # Fallback if image not found
+        left_box = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0), Inches(0), Inches(5.4), Inches(7.5))
+        left_box.fill.solid()
+        left_box.fill.fore_color.rgb = accent_dark
+        left_box.line.fill.background()
     
-    rect_cyan = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0), Inches(0.35), Inches(13.333), Inches(0.12))
-    rect_cyan.fill.solid()
-    rect_cyan.fill.fore_color.rgb = accent_cyan
-    rect_cyan.line.fill.background()
-
-    # Main Title Box
-    title_box = slide.shapes.add_textbox(Inches(0.75), Inches(1.8), Inches(11.83), Inches(1.8))
+    # Right Side Text & Metadata
+    title_box = slide.shapes.add_textbox(Inches(5.95), Inches(1.8), Inches(6.6), Inches(4.5))
     tf = title_box.text_frame
     tf.word_wrap = True
-    p1 = tf.paragraphs[0]
-    p1.text = "Mutual Fund Analytics & Portfolio Risk"
-    p1.font.name = 'Trebuchet MS'
-    p1.font.size = Pt(44)
-    p1.font.bold = True
-    p1.font.color.rgb = text_white
     
-    p2 = tf.add_paragraph()
-    p2.text = "Technical Case Study & Executive Dashboard Specifications"
-    p2.font.name = 'Trebuchet MS'
-    p2.font.size = Pt(20)
-    p2.font.color.rgb = accent_cyan
-    p2.space_before = Pt(10)
+    # Category Tracker
+    p_cat = tf.paragraphs[0]
+    p_cat.text = "BLUESTOCK ANALYTICS • CAPSTONE SUBMISSION"
+    p_cat.font.name = 'Calibri'
+    p_cat.font.size = Pt(9.5)
+    p_cat.font.bold = True
+    p_cat.font.color.rgb = text_gray
     
-    # Details Box (Author, Tech stack)
-    details_box = slide.shapes.add_textbox(Inches(0.75), Inches(4.2), Inches(6.5), Inches(2.2))
+    # Main Title
+    p_title = tf.add_paragraph()
+    p_title.text = "Mutual Fund Analytics & Risk Platform"
+    p_title.font.name = 'Georgia'
+    p_title.font.size = Pt(36)
+    p_title.font.bold = True
+    p_title.font.color.rgb = text_black
+    p_title.space_before = Pt(12)
+    
+    # Subtitle
+    p_sub = tf.add_paragraph()
+    p_sub.text = "Technical Case Study & Executive Dashboard Specifications"
+    p_sub.font.name = 'Georgia'
+    p_sub.font.size = Pt(14)
+    p_sub.font.color.rgb = text_gray
+    p_sub.space_before = Pt(6)
+    p_sub.space_after = Pt(24)
+
+    # Divider line on the right
+    line = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(5.95), Inches(3.7), Inches(6.6), Inches(0.015))
+    line.fill.solid()
+    line.fill.fore_color.rgb = RGBColor(210, 210, 210)
+    line.line.fill.background()
+    
+    # Presenter Details
+    details_box = slide.shapes.add_textbox(Inches(5.95), Inches(4.0), Inches(6.6), Inches(2.2))
     tf_det = details_box.text_frame
     tf_det.word_wrap = True
     
     details_text = [
-        ("Presenter:", " Dhileep B, Lead Financial Data Analyst & Quant Analyst", True),
-        ("Database Layer:", " Relational SQLite 3 Schema with automated indexing", False),
-        ("Analytics Stack:", " Python, pandas, scipy, yfinance API, & Power BI Theme", False),
-        ("Project Status:", " Production Ready Build (CFD86E1)", False),
+        ("Presenter:", " Dhileep B, Lead Quantitative Analyst"),
+        ("Database Layer:", " Relational SQLite 3 STAR Schema"),
+        ("Analytics Stack:", " Python (pandas, scipy, yfinance) & Power BI"),
+        ("Project Status:", " Production Ready Clean Build"),
     ]
-    for idx, (label, val, is_first) in enumerate(details_text):
+    for idx, (label, val) in enumerate(details_text):
         p = tf_det.paragraphs[0] if idx == 0 else tf_det.add_paragraph()
         run_lbl = p.add_run()
         run_lbl.text = label
-        run_lbl.font.name = 'Segoe UI'
+        run_lbl.font.name = 'Calibri'
         run_lbl.font.size = Pt(11)
         run_lbl.font.bold = True
-        run_lbl.font.color.rgb = text_white
+        run_lbl.font.color.rgb = text_black
         
         run_val = p.add_run()
         run_val.text = val
-        run_val.font.name = 'Segoe UI'
+        run_val.font.name = 'Calibri'
         run_val.font.size = Pt(11)
-        run_val.font.color.rgb = text_silver
-        p.space_after = Pt(6)
-        
-    # Draw right-aligned card for logo/badge placeholder
-    badge = create_card_shape(slide, Inches(8.5), Inches(4.2), Inches(4.08), Inches(2.2))
-    tf_b = badge.text_frame
-    tf_b.word_wrap = True
-    tf_b.margin_left = Inches(0.2)
-    tf_b.margin_top = Inches(0.2)
-    
-    p_b1 = tf_b.paragraphs[0]
-    p_b1.text = "BLUESTOCK SUBMISSION"
-    p_b1.font.name = 'Trebuchet MS'
-    p_b1.font.size = Pt(11)
-    p_b1.font.bold = True
-    p_b1.font.color.rgb = accent_cyan
-    
-    p_b2 = tf_b.add_paragraph()
-    p_b2.text = "Day 1 to Day 6 Deliverables"
-    p_b2.font.name = 'Segoe UI'
-    p_b2.font.size = Pt(14)
-    p_b2.font.bold = True
-    p_b2.font.color.rgb = text_white
-    p_b2.space_before = Pt(8)
-    
-    p_b3 = tf_b.add_paragraph()
-    p_b3.text = "ETL Pipeline, SQL DB, Performance scorecard, Value-at-Risk modeling, and BI themes."
-    p_b3.font.name = 'Segoe UI'
-    p_b3.font.size = Pt(9.5)
-    p_b3.font.color.rgb = text_silver
-    p_b3.space_before = Pt(8)
+        run_val.font.color.rgb = text_charcoal
+        p.space_after = Pt(4)
 
     # Slide 1 Speaker Notes
     slide.notes_slide.notes_text_frame.text = (
         "Welcome to the board presentation of our Mutual Fund Analytics and Risk Platform. "
-        "This platform represents a complete end-to-end data pipeline: from raw AMFI and clienttransaction "
+        "This platform represents a complete end-to-end data pipeline: from raw AMFI and client transaction "
         "files, to relational database modeling, advanced quantitative risk metrics calculation, and "
         "finally, dynamic reporting in Power BI. Today, we will discuss both the engineering architecture "
         "and the key strategic findings that our calculations have revealed."
@@ -959,7 +949,7 @@ def build_pptx(filename):
     # SLIDE 2: PROBLEM STATEMENT
     # ==================================================================
     slide = prs.slides.add_slide(blank_layout)
-    apply_slide_background(slide, bg_dark)
+    apply_slide_background(slide, bg_white)
     add_slide_header(slide, "The Problem: Data Fragmentation & Risk Uncertainty")
     
     # 3-Column Card Layout
@@ -991,30 +981,30 @@ def build_pptx(filename):
         tf_c.margin_right = Inches(0.25)
         tf_c.margin_top = Inches(0.25)
         
-        # Large Number Accent
+        # Large Number Accent (monochrome slate grey)
         p_num = tf_c.paragraphs[0]
         p_num.text = num
-        p_num.font.name = 'Trebuchet MS'
+        p_num.font.name = 'Georgia'
         p_num.font.size = Pt(28)
         p_num.font.bold = True
-        p_num.font.color.rgb = accent_cyan
+        p_num.font.color.rgb = text_gray
         
         # Header text
         p_hdr = tf_c.add_paragraph()
         p_hdr.text = header
-        p_hdr.font.name = 'Trebuchet MS'
+        p_hdr.font.name = 'Georgia'
         p_hdr.font.size = Pt(13)
         p_hdr.font.bold = True
-        p_hdr.font.color.rgb = text_white
+        p_hdr.font.color.rgb = text_black
         p_hdr.space_before = Pt(10)
         p_hdr.space_after = Pt(12)
         
         # Description
         p_desc = tf_c.add_paragraph()
         p_desc.text = desc
-        p_desc.font.name = 'Segoe UI'
+        p_desc.font.name = 'Calibri'
         p_desc.font.size = Pt(10.5)
-        p_desc.font.color.rgb = text_silver
+        p_desc.font.color.rgb = text_charcoal
         p_desc.line_spacing = 1.25
 
     # Slide 2 Speaker Notes
@@ -1030,7 +1020,7 @@ def build_pptx(filename):
     # SLIDE 3: UNIFIED DATA ASSETS
     # ==================================================================
     slide = prs.slides.add_slide(blank_layout)
-    apply_slide_background(slide, bg_dark)
+    apply_slide_background(slide, bg_white)
     add_slide_header(slide, "Unified Integration: The Ingested Platform Inputs")
     
     # 4-Column Card Layout
@@ -1041,20 +1031,16 @@ def build_pptx(filename):
     
     inputs = [
         ("NAV HISTORY", "7,798 Clean Rows", 
-         "Ingested daily Net Asset Value history spanning a 3-year period (2022-2024) across 10 mutual funds. Establishes the core pricing baseline for return calculations.",
-         accent_cyan),
+         "Ingested daily Net Asset Value history spanning a 3-year period (2022-2024) across 10 mutual funds. Establishes the core pricing baseline for return calculations."),
         ("RETAIL TRANSACTIONS", "1,985 Ledger Records", 
-         "Granular client transactions covering 200 distinct investor profiles. Contains buy/sell classifications, amounts, and units for cohort analysis.",
-         accent_cyan),
+         "Granular client transactions covering 200 distinct investor profiles. Contains buy/sell classifications, amounts, and units for cohort analysis."),
         ("MARKET BENCHMARKS", "Daily Index Feeds", 
-         "Fetched daily close pricing for Nifty 50 and Nifty 100 via the yfinance API to serve as market indices and risk baselines.",
-         accent_green),
+         "Fetched daily close pricing for Nifty 50 and Nifty 100 via the yfinance API to serve as market indices and risk baselines."),
         ("PORTFOLIO HOLDINGS", "Stock-Level Weights", 
-         "Holdings allocations mapped across schemes to evaluate sector weights. Drives our Herfindahl-Hirschman Index (HHI) concentration calculations.",
-         accent_green)
+         "Holdings allocations mapped across schemes to evaluate sector weights. Drives our Herfindahl-Hirschman Index (HHI) concentration calculations.")
     ]
     
-    for idx, (title, highlight, body, color) in enumerate(inputs):
+    for idx, (title, highlight, body) in enumerate(inputs):
         x_pos = card_x_start + idx * (card_w4 + card_gap)
         create_card_shape(slide, x_pos, card_y, card_w4, card_h4)
         
@@ -1067,25 +1053,25 @@ def build_pptx(filename):
         
         p_title = tf_c.paragraphs[0]
         p_title.text = title
-        p_title.font.name = 'Trebuchet MS'
+        p_title.font.name = 'Georgia'
         p_title.font.size = Pt(12)
         p_title.font.bold = True
-        p_title.font.color.rgb = color
+        p_title.font.color.rgb = text_gray
         
         p_hl = tf_c.add_paragraph()
         p_hl.text = highlight
-        p_hl.font.name = 'Segoe UI'
+        p_hl.font.name = 'Calibri'
         p_hl.font.size = Pt(14)
         p_hl.font.bold = True
-        p_hl.font.color.rgb = text_white
+        p_hl.font.color.rgb = text_black
         p_hl.space_before = Pt(8)
         p_hl.space_after = Pt(12)
         
         p_body = tf_c.add_paragraph()
         p_body.text = body
-        p_body.font.name = 'Segoe UI'
+        p_body.font.name = 'Calibri'
         p_body.font.size = Pt(9.5)
-        p_body.font.color.rgb = text_silver
+        p_body.font.color.rgb = text_charcoal
         p_body.line_spacing = 1.2
 
     # Slide 3 Speaker Notes
@@ -1101,7 +1087,7 @@ def build_pptx(filename):
     # SLIDE 4: ETL PIPELINE & DB SCHEMA
     # ==================================================================
     slide = prs.slides.add_slide(blank_layout)
-    apply_slide_background(slide, bg_dark)
+    apply_slide_background(slide, bg_white)
     add_slide_header(slide, "ETL Pipeline & SQLite STAR Schema Database Design")
     
     # Left Card: ETL Flow
@@ -1113,10 +1099,10 @@ def build_pptx(filename):
     
     p_lh1 = tf_l.paragraphs[0]
     p_lh1.text = "Ingestion Pipeline & Operations"
-    p_lh1.font.name = 'Trebuchet MS'
+    p_lh1.font.name = 'Georgia'
     p_lh1.font.size = Pt(16)
     p_lh1.font.bold = True
-    p_lh1.font.color.rgb = accent_cyan
+    p_lh1.font.color.rgb = text_black
     
     etl_steps = [
         "1. Schema Ingestion Check: Standardizes CSV headers and forces correct naming configurations.",
@@ -1126,9 +1112,9 @@ def build_pptx(filename):
     for step in etl_steps:
         p_s = tf_l.add_paragraph()
         p_s.text = step
-        p_s.font.name = 'Segoe UI'
+        p_s.font.name = 'Calibri'
         p_s.font.size = Pt(11)
-        p_s.font.color.rgb = text_silver
+        p_s.font.color.rgb = text_charcoal
         p_s.space_before = Pt(12)
         p_s.line_spacing = 1.2
         
@@ -1141,10 +1127,10 @@ def build_pptx(filename):
     
     p_rh1 = tf_r.paragraphs[0]
     p_rh1.text = "Relational Star Schema Design"
-    p_rh1.font.name = 'Trebuchet MS'
+    p_rh1.font.name = 'Georgia'
     p_rh1.font.size = Pt(16)
     p_rh1.font.bold = True
-    p_rh1.font.color.rgb = accent_green
+    p_rh1.font.color.rgb = text_black
     
     schema_details = [
         "• Dimension Tables: dim_scheme (fund attributes), dim_amc (asset manager masters), dim_investor (client demographics & risk profiles), dim_date (unified time dimension).",
@@ -1154,9 +1140,9 @@ def build_pptx(filename):
     for detail in schema_details:
         p_d = tf_r.add_paragraph()
         p_d.text = detail
-        p_d.font.name = 'Segoe UI'
+        p_d.font.name = 'Calibri'
         p_d.font.size = Pt(10.5)
-        p_d.font.color.rgb = text_silver
+        p_d.font.color.rgb = text_charcoal
         p_d.space_before = Pt(10)
         p_d.line_spacing = 1.2
 
@@ -1173,7 +1159,7 @@ def build_pptx(filename):
     # SLIDE 5: ENGINEERING CHALLENGES
     # ==================================================================
     slide = prs.slides.add_slide(blank_layout)
-    apply_slide_background(slide, bg_dark)
+    apply_slide_background(slide, bg_white)
     add_slide_header(slide, "Engineering Fallbacks: Handling Production Anomalies")
     
     # 3 horizontal blocks
@@ -1182,9 +1168,9 @@ def build_pptx(filename):
     block_w = Inches(11.83)
     
     challenges = [
-        ("Plotly Image Export Fallback", "Headless tasks on Windows often freeze when running Plotly's static image exporter (Kaleido). We implemented a Matplotlib/Seaborn rendering fallback that automatically translates Plotly trace definitions and exports high-fidelity PNGs if Kaleido hangs.", accent_cyan),
-        ("yfinance MultiIndex Flattening", "Downloading market indices via the Yahoo Finance API returns MultiIndexed columns on single tickers. The ingestion script programmatically flattens these column headers to prevent column shifting during dataframe serialization.", accent_green),
-        ("Invalid Transaction Dates", "The raw transactional sheet contained anomalous text inputs (e.g. 'INVALID' string entries). The cleaning pipeline resolves this by parsing date fields with errors coerced, and purging NaT rows to preserve integrity.", accent_cyan)
+        ("Plotly Image Export Fallback", "Headless tasks on Windows often freeze when running Plotly's static image exporter (Kaleido). We implemented a Matplotlib/Seaborn rendering fallback that automatically translates Plotly trace definitions and exports high-fidelity PNGs if Kaleido hangs.", text_black),
+        ("yfinance MultiIndex Flattening", "Downloading market indices via the Yahoo Finance API returns MultiIndexed columns on single tickers. The ingestion script programmatically flattens these column headers to prevent column shifting during dataframe serialization.", text_black),
+        ("Invalid Transaction Dates", "The raw transactional sheet contained anomalous text inputs (e.g. 'INVALID' string entries). The cleaning pipeline resolves this by parsing date fields with errors coerced, and purging NaT rows to preserve integrity.", text_black)
     ]
     
     for idx, (title, body, color) in enumerate(challenges):
@@ -1200,16 +1186,16 @@ def build_pptx(filename):
         
         p_t = tf_b.paragraphs[0]
         p_t.text = title
-        p_t.font.name = 'Trebuchet MS'
+        p_t.font.name = 'Georgia'
         p_t.font.size = Pt(13)
         p_t.font.bold = True
         p_t.font.color.rgb = color
         
         p_d = tf_b.add_paragraph()
         p_d.text = body
-        p_d.font.name = 'Segoe UI'
+        p_d.font.name = 'Calibri'
         p_d.font.size = Pt(10.5)
-        p_d.font.color.rgb = text_silver
+        p_d.font.color.rgb = text_charcoal
         p_d.space_before = Pt(4)
         p_d.line_spacing = 1.15
 
@@ -1226,15 +1212,15 @@ def build_pptx(filename):
     # SLIDE 6: STATISTICAL EDA
     # ==================================================================
     slide = prs.slides.add_slide(blank_layout)
-    apply_slide_background(slide, bg_dark)
+    apply_slide_background(slide, bg_white)
     add_slide_header(slide, "Exploratory Data Analysis: Key Statistical Insights")
     
     # 2 horizontal blocks
     block_h2 = Inches(2.1)
     
     eda_insights = [
-        ("Scheme Co-movement & Diversification", "Computing the Pearson correlation matrix on daily returns reveals a highly integrated large-cap segment. All core large-cap funds display return correlations above 0.85. In contrast, the ICICI Prudential Technology Fund exhibits a daily correlation of only 0.42 to the core index. This highlights its significant diversification benefit, serving as a shock-absorber during standard large-cap pullbacks.", accent_cyan),
-        ("Expense Ratio Drag (OLS Regression)", "We ran an Ordinary Least Squares (OLS) regression mapping return drag as a function of annual fund fees. The model confirms that expense ratios act as a systemic drag on performance. Active schemes with expense structures exceeding 1.10% (e.g. SBI Small Cap) consistently erode net compounding returns compared to cost-efficient peers with similar portfolios.", accent_green)
+        ("Scheme Co-movement & Diversification", "Computing the Pearson correlation matrix on daily returns reveals a highly integrated large-cap segment. All core large-cap funds display return correlations above 0.85. In contrast, the ICICI Prudential Technology Fund exhibits a daily correlation of only 0.42 to the core index. This highlights its significant diversification benefit, serving as a shock-absorber during standard large-cap pullbacks.", text_black),
+        ("Expense Ratio Drag (OLS Regression)", "We ran an Ordinary Least Squares (OLS) regression mapping return drag as a function of annual fund fees. The model confirms that expense ratios act as a systemic drag on performance. Active schemes with expense structures exceeding 1.10% (e.g. SBI Small Cap) consistently erode net compounding returns compared to cost-efficient peers with similar portfolios.", text_black)
     ]
     
     for idx, (title, body, color) in enumerate(eda_insights):
@@ -1250,16 +1236,16 @@ def build_pptx(filename):
         
         p_t = tf_b.paragraphs[0]
         p_t.text = title
-        p_t.font.name = 'Trebuchet MS'
+        p_t.font.name = 'Georgia'
         p_t.font.size = Pt(15)
         p_t.font.bold = True
         p_t.font.color.rgb = color
         
         p_d = tf_b.add_paragraph()
         p_d.text = body
-        p_d.font.name = 'Segoe UI'
+        p_d.font.name = 'Calibri'
         p_d.font.size = Pt(11)
-        p_d.font.color.rgb = text_silver
+        p_d.font.color.rgb = text_charcoal
         p_d.space_before = Pt(8)
         p_d.line_spacing = 1.25
 
@@ -1276,7 +1262,7 @@ def build_pptx(filename):
     # SLIDE 7: PERFORMANCE LEADERBOARD
     # ==================================================================
     slide = prs.slides.add_slide(blank_layout)
-    apply_slide_background(slide, bg_dark)
+    apply_slide_background(slide, bg_white)
     add_slide_header(slide, "The Performance Scorecard Leaderboard (Day 4)")
     
     # Left: Text context, Right: Table
@@ -1287,10 +1273,10 @@ def build_pptx(filename):
     
     p_lh = tf_l.paragraphs[0]
     p_lh.text = "Multi-Factor Scoring"
-    p_lh.font.name = 'Trebuchet MS'
+    p_lh.font.name = 'Georgia'
     p_lh.font.size = Pt(16)
     p_lh.font.bold = True
-    p_lh.font.color.rgb = accent_cyan
+    p_lh.font.color.rgb = text_black
     
     p_body = tf_l.add_paragraph()
     p_body.text = (
@@ -1303,14 +1289,13 @@ def build_pptx(filename):
         "DSP Top 100 ranks #1 due to high annualized active Alpha (28.88%) and a Sharpe of 1.22.\n\n"
         "Mirae Asset Large Cap ranks #2 due to strong drawdown control (-17.47%)."
     )
-    p_body.font.name = 'Segoe UI'
+    p_body.font.name = 'Calibri'
     p_body.font.size = Pt(10)
-    p_body.font.color.rgb = text_silver
+    p_body.font.color.rgb = text_charcoal
     p_body.space_before = Pt(8)
     p_body.line_spacing = 1.2
     
     # Right: PPTX Table shape
-    # 7 rows (Header + Top 6 funds), 7 columns
     rows = 7
     cols = 7
     left = Inches(4.8)
@@ -1330,23 +1315,22 @@ def build_pptx(filename):
     table.columns[5].width = Inches(1.0)  # Max DD
     table.columns[6].width = Inches(0.95) # Expense
     
-    # Table Headers
+    # Table Headers (monochrome charcoal style)
     headers = ["Rank", "Scheme Name", "3Y CAGR", "Sharpe", "Alpha", "Max DD", "Expense"]
     for col_idx, h_text in enumerate(headers):
         cell = table.cell(0, col_idx)
         cell.text = h_text
         cell.fill.solid()
-        cell.fill.fore_color.rgb = card_charcoal
+        cell.fill.fore_color.rgb = accent_dark
         p = cell.text_frame.paragraphs[0]
         p.alignment = PP_ALIGN.CENTER
-        p.font.name = 'Trebuchet MS'
+        p.font.name = 'Georgia'
         p.font.size = Pt(9.5)
         p.font.bold = True
-        p.font.color.rgb = text_white
+        p.font.color.rgb = bg_white
         
     # Populate Table Rows
     for row_idx, row_data in enumerate(scorecard_data[:6]):
-        # Data mapping
         cells_data = [
             f"#{row_data['rank']}",
             row_data['name'],
@@ -1361,24 +1345,24 @@ def build_pptx(filename):
             cell = table.cell(row_idx + 1, col_idx)
             cell.text = text_val
             cell.fill.solid()
-            # Alternate row background
+            # Alternate row background (very light slate grey and pure white)
             if row_idx % 2 == 0:
-                cell.fill.fore_color.rgb = RGBColor(20, 24, 38)
+                cell.fill.fore_color.rgb = RGBColor(245, 247, 250)
             else:
-                cell.fill.fore_color.rgb = bg_dark
+                cell.fill.fore_color.rgb = bg_white
                 
             p = cell.text_frame.paragraphs[0]
             if col_idx == 1:
                 p.alignment = PP_ALIGN.LEFT
             else:
                 p.alignment = PP_ALIGN.CENTER
-            p.font.name = 'Segoe UI'
+            p.font.name = 'Calibri'
             p.font.size = Pt(9)
             if col_idx == 0:
                 p.font.bold = True
-                p.font.color.rgb = accent_cyan
+                p.font.color.rgb = text_black
             else:
-                p.font.color.rgb = text_silver
+                p.font.color.rgb = text_charcoal
 
     # Slide 7 Speaker Notes
     slide.notes_slide.notes_text_frame.text = (
@@ -1394,7 +1378,7 @@ def build_pptx(filename):
     # SLIDE 8: PORTFOLIO CONCENTRATION & SECTOR HHI
     # ==================================================================
     slide = prs.slides.add_slide(blank_layout)
-    apply_slide_background(slide, bg_dark)
+    apply_slide_background(slide, bg_white)
     add_slide_header(slide, "Portfolio Concentration & Sector HHI Analysis (Day 6)")
     
     # Left text box
@@ -1405,10 +1389,10 @@ def build_pptx(filename):
     
     p_lh = tf_l.paragraphs[0]
     p_lh.text = "Herfindahl-Hirschman Index"
-    p_lh.font.name = 'Trebuchet MS'
+    p_lh.font.name = 'Georgia'
     p_lh.font.size = Pt(16)
     p_lh.font.bold = True
-    p_lh.font.color.rgb = accent_cyan
+    p_lh.font.color.rgb = text_black
     
     p_body = tf_l.add_paragraph()
     p_body.text = (
@@ -1420,19 +1404,18 @@ def build_pptx(filename):
         "• Low Concentration (HHI < 1,500):\n"
         "HDFC Mid-Cap Opportunities shows high sector-level diversification (HHI = 1,327.42)."
     )
-    p_body.font.name = 'Segoe UI'
+    p_body.font.name = 'Calibri'
     p_body.font.size = Pt(10.5)
-    p_body.font.color.rgb = text_silver
+    p_body.font.color.rgb = text_charcoal
     p_body.space_before = Pt(8)
     p_body.line_spacing = 1.2
 
-    # Right: visual cards/bars for Top 4 funds
-    # Let's draw 4 cards showing the HHI score clearly
+    # Right: visual cards/bars for Top 4 funds (monochrome clean style)
     hhi_list = [
-        ("ICICI Pru Technology", "7,288.00", "HIGH CONCENTRATION", accent_cyan, RGBColor(239, 83, 80)),
-        ("Mirae Asset Large Cap", "1,827.16", "MODERATE CONCENTRATION", accent_green, accent_green),
-        ("DSP Top 100 Equity", "1,827.16", "MODERATE CONCENTRATION", accent_green, accent_green),
-        ("HDFC Mid-Cap Opp", "1,327.42", "LOW CONCENTRATION", text_white, accent_green)
+        ("ICICI Pru Technology", "7,288.00", "HIGH CONCENTRATION", text_black, text_gray),
+        ("Mirae Asset Large Cap", "1,827.16", "MODERATE CONCENTRATION", text_black, text_gray),
+        ("DSP Top 100 Equity", "1,827.16", "MODERATE CONCENTRATION", text_black, text_gray),
+        ("HDFC Mid-Cap Opp", "1,327.42", "LOW CONCENTRATION", text_black, text_gray)
     ]
     
     card_h = Inches(0.95)
@@ -1450,14 +1433,14 @@ def build_pptx(filename):
         
         p_name = tf_n.paragraphs[0]
         p_name.text = name
-        p_name.font.name = 'Segoe UI'
+        p_name.font.name = 'Calibri'
         p_name.font.size = Pt(13)
         p_name.font.bold = True
-        p_name.font.color.rgb = text_white
+        p_name.font.color.rgb = text_black
         
         p_lbl = tf_n.add_paragraph()
         p_lbl.text = label
-        p_lbl.font.name = 'Segoe UI'
+        p_lbl.font.name = 'Calibri'
         p_lbl.font.size = Pt(8.5)
         p_lbl.font.bold = True
         p_lbl.font.color.rgb = text_col
@@ -1473,7 +1456,7 @@ def build_pptx(filename):
         p_val = tf_v.paragraphs[0]
         p_val.text = val
         p_val.alignment = PP_ALIGN.RIGHT
-        p_val.font.name = 'Trebuchet MS'
+        p_val.font.name = 'Georgia'
         p_val.font.size = Pt(22)
         p_val.font.bold = True
         p_val.font.color.rgb = border_col
@@ -1491,7 +1474,7 @@ def build_pptx(filename):
     # SLIDE 9: DOWNSIDE TAIL RISK (VaR & CVaR)
     # ==================================================================
     slide = prs.slides.add_slide(blank_layout)
-    apply_slide_background(slide, bg_dark)
+    apply_slide_background(slide, bg_white)
     add_slide_header(slide, "Downside Tail Risk: Daily Historical VaR & CVaR")
     
     # Left text box
@@ -1502,10 +1485,10 @@ def build_pptx(filename):
     
     p_lh = tf_l.paragraphs[0]
     p_lh.text = "Risk Expected Shortfall"
-    p_lh.font.name = 'Trebuchet MS'
+    p_lh.font.name = 'Georgia'
     p_lh.font.size = Pt(16)
     p_lh.font.bold = True
-    p_lh.font.color.rgb = accent_cyan
+    p_lh.font.color.rgb = text_black
     
     p_body = tf_l.add_paragraph()
     p_body.text = (
@@ -1516,13 +1499,13 @@ def build_pptx(filename):
         "The average expected loss during the worst 5% of trading days. Also known as Expected Shortfall.\n\n"
         "Sector concentration directly amplifies tail risk. The tech sectoral fund displays significantly higher daily losses than diversified large-cap peers."
     )
-    p_body.font.name = 'Segoe UI'
+    p_body.font.name = 'Calibri'
     p_body.font.size = Pt(10.5)
-    p_body.font.color.rgb = text_silver
+    p_body.font.color.rgb = text_charcoal
     p_body.space_before = Pt(8)
     p_body.line_spacing = 1.25
 
-    # Right: Table comparing VaR & CVaR for top funds
+    # Right: Table comparing VaR & CVaR (Monochrome clean layout)
     rows_r = 6
     cols_r = 3
     left_r = Inches(5.8)
@@ -1543,13 +1526,13 @@ def build_pptx(filename):
         cell = table_r.cell(0, col_idx)
         cell.text = h_text
         cell.fill.solid()
-        cell.fill.fore_color.rgb = card_charcoal
+        cell.fill.fore_color.rgb = accent_dark
         p = cell.text_frame.paragraphs[0]
         p.alignment = PP_ALIGN.CENTER
-        p.font.name = 'Trebuchet MS'
+        p.font.name = 'Georgia'
         p.font.size = Pt(10.5)
         p.font.bold = True
-        p.font.color.rgb = text_white
+        p.font.color.rgb = bg_white
         
     risk_report_data = [
         ("ICICI Pru Technology", 0.02332, 0.03009),
@@ -1565,19 +1548,19 @@ def build_pptx(filename):
             cell.text = text_val
             cell.fill.solid()
             if row_idx % 2 == 0:
-                cell.fill.fore_color.rgb = RGBColor(20, 24, 38)
+                cell.fill.fore_color.rgb = RGBColor(245, 247, 250)
             else:
-                cell.fill.fore_color.rgb = bg_dark
+                cell.fill.fore_color.rgb = bg_white
                 
             p = cell.text_frame.paragraphs[0]
             if col_idx == 0:
                 p.alignment = PP_ALIGN.LEFT
                 p.font.bold = True
-                p.font.color.rgb = text_white
+                p.font.color.rgb = text_black
             else:
                 p.alignment = PP_ALIGN.CENTER
-                p.font.color.rgb = accent_cyan if col_idx == 1 else RGBColor(239, 83, 80)
-            p.font.name = 'Segoe UI'
+                p.font.color.rgb = text_charcoal
+            p.font.name = 'Calibri'
             p.font.size = Pt(10)
 
     # Slide 9 Speaker Notes
@@ -1594,7 +1577,7 @@ def build_pptx(filename):
     # SLIDE 10: COHORT ANALYSIS & SIP CONTINUITY
     # ==================================================================
     slide = prs.slides.add_slide(blank_layout)
-    apply_slide_background(slide, bg_dark)
+    apply_slide_background(slide, bg_white)
     add_slide_header(slide, "Investor Demographics & Cohort Analysis")
     
     # 2 Column Card Layout (Left: Cohorts, Right: SIP Continuity)
@@ -1611,10 +1594,10 @@ def build_pptx(filename):
     
     p_clh = tf_cl.paragraphs[0]
     p_clh.text = "Inflow Vintage Cohorts"
-    p_clh.font.name = 'Trebuchet MS'
+    p_clh.font.name = 'Georgia'
     p_clh.font.size = Pt(16)
     p_clh.font.bold = True
-    p_clh.font.color.rgb = accent_cyan
+    p_clh.font.color.rgb = text_black
     
     p_clb = tf_cl.add_paragraph()
     p_clb.text = (
@@ -1624,9 +1607,9 @@ def build_pptx(filename):
         "• Redemption Behaviors:\n"
         "Clients with Aggressive risk profiles show high retention. Conversely, Conservative accounts show a 24% redemption increase during periods of negative index returns, highlighting behavioral panic."
     )
-    p_clb.font.name = 'Segoe UI'
+    p_clb.font.name = 'Calibri'
     p_clb.font.size = Pt(10.5)
-    p_clb.font.color.rgb = text_silver
+    p_clb.font.color.rgb = text_charcoal
     p_clb.space_before = Pt(10)
     p_clb.line_spacing = 1.25
     
@@ -1640,10 +1623,10 @@ def build_pptx(filename):
     
     p_crh = tf_cr.paragraphs[0]
     p_crh.text = "SIP Continuity & Churn Streaks"
-    p_crh.font.name = 'Trebuchet MS'
+    p_crh.font.name = 'Georgia'
     p_crh.font.size = Pt(16)
     p_crh.font.bold = True
-    p_crh.font.color.rgb = accent_green
+    p_crh.font.color.rgb = text_black
     
     p_crb = tf_cr.add_paragraph()
     p_crb.text = (
@@ -1651,9 +1634,9 @@ def build_pptx(filename):
         "• Active SIP Folios: Show an impressive 87.2% continuity rate. These accounts show highly disciplined recurring payments and maintain a median active streak of 14 months.\n\n"
         "• Inactive SIP Folios: Show a low continuity rate of 14.5%. Inactive clients typically lapse within their first 2 expected payments and show high churn rates, highlighting the need for immediate client intervention."
     )
-    p_crb.font.name = 'Segoe UI'
+    p_crb.font.name = 'Calibri'
     p_crb.font.size = Pt(10.5)
-    p_crb.font.color.rgb = text_silver
+    p_crb.font.color.rgb = text_charcoal
     p_crb.space_before = Pt(10)
     p_crb.line_spacing = 1.25
 
@@ -1671,7 +1654,7 @@ def build_pptx(filename):
     # SLIDE 11: BI DASHBOARD BLUEPRINT
     # ==================================================================
     slide = prs.slides.add_slide(blank_layout)
-    apply_slide_background(slide, bg_dark)
+    apply_slide_background(slide, bg_white)
     add_slide_header(slide, "Executive BI Dashboard Specification")
     
     # 4 horizontal card blocks (each page)
@@ -1679,10 +1662,10 @@ def build_pptx(filename):
     block_gap = Inches(0.18)
     
     pages = [
-        ("PAGE 1: INDUSTRY OVERVIEW", "KPI cards showing total Industry AUM (₹24,850 Cr) and Active Folios (1.42M). Tracks monthly inflows and maps AMC market share concentration (HDFC vs. SBI) using a Treemap.", accent_cyan),
-        ("PAGE 2: FUND PERFORMANCE", "Risk-Return scatter plot (X-axis = Beta, Y-axis = 3Y CAGR, Bubble size = AUM). Includes a dynamic line chart comparing scheme returns to the Nifty 100 benchmark (re-indexed to ₹100), and a scorecard leaderboard grid.", accent_green),
-        ("PAGE 3: INVESTOR ANALYTICS", "Includes an Indian geographical shape map showing investment totals, a transaction type distribution donut chart (SIP vs. Lumpsum vs. Redemption), and an age cohort column chart.", accent_cyan),
-        ("PAGE 4: SIP & MARKET TRENDS", "Dual-Y Axis line chart comparing monthly SIP inflows with the Nifty 50 close price, and a quarterly net inflow heatmap by fund category.", accent_green)
+        ("PAGE 1: INDUSTRY OVERVIEW", "KPI cards showing total Industry AUM (₹24,850 Cr) and Active Folios (1.42M). Tracks monthly inflows and maps AMC market share concentration (HDFC vs. SBI) using a Treemap.", text_black),
+        ("PAGE 2: FUND PERFORMANCE", "Risk-Return scatter plot (X-axis = Beta, Y-axis = 3Y CAGR, Bubble size = AUM). Includes a dynamic line chart comparing scheme returns to the Nifty 100 benchmark (re-indexed to ₹100), and a scorecard leaderboard grid.", text_black),
+        ("PAGE 3: INVESTOR ANALYTICS", "Includes an Indian geographical shape map showing investment totals, a transaction type distribution donut chart (SIP vs. Lumpsum vs. Redemption), and an age cohort column chart.", text_black),
+        ("PAGE 4: SIP & MARKET TRENDS", "Dual-Y Axis line chart comparing monthly SIP inflows with the Nifty 50 close price, and a quarterly net inflow heatmap by fund category.", text_black)
     ]
     
     for idx, (title, desc, color) in enumerate(pages):
@@ -1698,16 +1681,16 @@ def build_pptx(filename):
         
         p_t = tf_b.paragraphs[0]
         p_t.text = title
-        p_t.font.name = 'Trebuchet MS'
+        p_t.font.name = 'Georgia'
         p_t.font.size = Pt(13)
         p_t.font.bold = True
         p_t.font.color.rgb = color
         
         p_d = tf_b.add_paragraph()
         p_d.text = desc
-        p_d.font.name = 'Segoe UI'
+        p_d.font.name = 'Calibri'
         p_d.font.size = Pt(9.5)
-        p_d.font.color.rgb = text_silver
+        p_d.font.color.rgb = text_charcoal
         p_d.space_before = Pt(2)
 
     # Slide 11 Speaker Notes
@@ -1723,10 +1706,10 @@ def build_pptx(filename):
     # SLIDE 12: STRATEGIC RECOMMENDATIONS
     # ==================================================================
     slide = prs.slides.add_slide(blank_layout)
-    apply_slide_background(slide, bg_dark)
+    apply_slide_background(slide, bg_white)
     add_slide_header(slide, "Strategic Recommendations & Action Plan")
     
-    # 3 column cards
+    # 3 column cards (clean monochrome)
     problems_r = [
         ("01", "SECTOR HHI CONCENTRATION LIMITS", 
          "Implement hard advisory guardrails. When a client's composite portfolio sector HHI exceeds 2,500, trigger automated rebalancing alerts to mitigate severe tail-risk losses associated with concentrated sector exposures.",
@@ -1751,34 +1734,34 @@ def build_pptx(filename):
         
         p_num = tf_c.paragraphs[0]
         p_num.text = num
-        p_num.font.name = 'Trebuchet MS'
+        p_num.font.name = 'Georgia'
         p_num.font.size = Pt(28)
         p_num.font.bold = True
-        p_num.font.color.rgb = accent_cyan
+        p_num.font.color.rgb = text_gray
         
         p_hdr = tf_c.add_paragraph()
         p_hdr.text = header
-        p_hdr.font.name = 'Trebuchet MS'
+        p_hdr.font.name = 'Georgia'
         p_hdr.font.size = Pt(13)
         p_hdr.font.bold = True
-        p_hdr.font.color.rgb = text_white
+        p_hdr.font.color.rgb = text_black
         p_hdr.space_before = Pt(10)
         p_hdr.space_after = Pt(12)
         
         p_desc = tf_c.add_paragraph()
         p_desc.text = desc
-        p_desc.font.name = 'Segoe UI'
+        p_desc.font.name = 'Calibri'
         p_desc.font.size = Pt(10.5)
-        p_desc.font.color.rgb = text_silver
+        p_desc.font.color.rgb = text_charcoal
         p_desc.line_spacing = 1.25
 
     # Slide 12 Speaker Notes
     slide.notes_slide.notes_text_frame.text = (
-        "Finally, we translate our analytical findings into three strategic advisor recommendations. "
-        "First, implement automated portfolio rebalancing alerts when a client's sector concentration HHI "
-        "exceeds 2,500. Second, prioritize systematic SIP marketing campaigns, and configure automated "
-        "alerts for missed early payments. Third, enforce a minimum 60% large-cap anchor for conservative "
-        "retail clients to buffer drawdowns and avoid behavioral redemptions. Thank you, and I am open to any questions."
+        "Finally, we translate our advisory calculations into three concrete recommendations. "
+        "First, implement automated portfolio alerts when HHI exceeds 2,500 to control concentration risk. "
+        "Second, direct retail campaign resources to recurring systematic SIPs and trigger follow-up "
+        "calls for missed early payments. Third, anchor conservative clients with a 60% large-cap core "
+        "to limit historical peak-to-trough drawdowns above a -20% floor. Thank you, and I am open to any questions."
     )
 
     prs.save(str(filename))
