@@ -1,0 +1,42 @@
+# =============================================================================
+# Mutual Fund Analytics Capstone Project
+# requirements.txt — Day 1 dependencies
+# =============================================================================
+# Install with:
+#   pip install -r requirements.txt
+# =============================================================================
+
+# --- Core data manipulation ---
+pandas==2.2.2
+numpy==1.26.4
+
+# --- HTTP requests (mfapi.in) ---
+requests==2.32.3
+
+# --- Parquet support ---
+pyarrow==16.1.0
+
+# --- Database (future days) ---
+sqlalchemy==2.0.30
+
+# --- Progress bars ---
+tqdm==4.66.4
+
+# --- Environment variables ---
+python-dotenv==1.0.1
+
+# --- Plotting (future days) ---
+plotly==5.22.0
+seaborn==0.13.2
+matplotlib==3.9.0
+statsmodels==0.14.6
+scipy==1.17.1
+
+
+# --- Jupyter (for notebooks/) ---
+jupyter==1.0.0
+ipykernel==6.29.4
+
+# --- Code quality ---
+black==24.4.2
+flake8==7.0.0

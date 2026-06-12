@@ -1,0 +1,203 @@
+scheme_code,scheme_name,nav,nav_date,repurchase_price,sale_price,amc_name,code_valid,is_duplicate,_source_file,_ingested_at,_schema_valid
+119551,Axis Bluechip Fund — Growth,193.5247,2024-01-01,191.5895,193.5247,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,475.85,2024-01-01,471.0915,475.85,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,368.677,2024-01-01,364.9902,368.677,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,303.3427,2024-01-01,300.3093,303.3427,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,86.4491,2024-01-01,85.5846,86.4491,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,86.4373,2024-01-02,85.5729,86.4373,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,38.461,2024-01-02,38.0764,38.461,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,434.4263,2024-01-02,430.082,434.4263,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,304.5464,2024-01-02,301.5009,304.5464,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,356.9556,2024-01-02,353.386,356.9556,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,20.0864,2024-01-03,19.8855,20.0864,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,485.2558,2024-01-03,480.4032,485.2558,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,417.8969,2024-01-03,413.7179,417.8969,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,114.0462,2024-01-03,112.9057,114.0462,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,99.0942,2024-01-03,98.1033,99.0942,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,99.8682,2024-01-04,98.8695,99.8682,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,159.0787,2024-01-04,157.4879,159.0787,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,267.1307,2024-01-04,264.4594,267.1307,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,221.6531,2024-01-04,219.4366,221.6531,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,152.7023,2024-01-04,151.1753,152.7023,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,309.8079,2024-01-05,306.7098,309.8079,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,78.352,2024-01-05,77.5685,78.352,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,153.1509,2024-01-05,151.6194,153.1509,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,189.5173,2024-01-05,187.6221,189.5173,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,233.4743,2024-01-05,231.1396,233.4743,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,394.7362,2024-01-06,390.7888,394.7362,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,107.8402,2024-01-06,106.7618,107.8402,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,261.9749,2024-01-06,259.3552,261.9749,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,300.2831,2024-01-06,297.2803,300.2831,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,32.7607,2024-01-06,32.4331,32.7607,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,307.697,2024-01-07,304.62,307.697,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,93.5568,2024-01-07,92.6212,93.5568,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,41.8753,2024-01-07,41.4565,41.8753,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,474.9539,2024-01-07,470.2044,474.9539,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,483.1597,2024-01-07,478.3281,483.1597,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,406.1147,2024-01-08,402.0536,406.1147,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,159.2607,2024-01-08,157.6681,159.2607,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,57.8593,2024-01-08,57.2807,57.8593,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,345.2742,2024-01-08,341.8215,345.2742,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,225.6747,2024-01-08,223.418,225.6747,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,69.7987,2024-01-09,69.1007,69.7987,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,252.6367,2024-01-09,250.1103,252.6367,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,26.8504,2024-01-09,26.5819,26.8504,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,455.567,2024-01-09,451.0113,455.567,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,136.8022,2024-01-09,135.4342,136.8022,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,334.6359,2024-01-10,331.2895,334.6359,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,162.7384,2024-01-10,161.111,162.7384,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,264.8333,2024-01-10,262.185,264.8333,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,277.888,2024-01-10,275.1091,277.888,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,100.5787,2024-01-10,99.5729,100.5787,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,485.0965,2024-01-11,480.2455,485.0965,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,389.8151,2024-01-11,385.9169,389.8151,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,470.3545,2024-01-11,465.651,470.3545,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,448.4654,2024-01-11,443.9807,448.4654,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,302.971,2024-01-11,299.9413,302.971,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,461.7184,2024-01-12,457.1012,461.7184,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,53.3613,2024-01-12,52.8277,53.3613,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,106.0316,2024-01-12,104.9713,106.0316,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,32.1614,2024-01-12,31.8398,32.1614,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,169.4119,2024-01-12,167.7178,169.4119,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,200.4519,2024-01-13,198.4474,200.4519,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,142.961,2024-01-13,141.5314,142.961,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,416.0814,2024-01-13,411.9206,416.0814,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,184.8091,2024-01-13,182.961,184.8091,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,147.6579,2024-01-13,146.1813,147.6579,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,275.9211,2024-01-14,273.1619,275.9211,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,79.0529,2024-01-14,78.2624,79.0529,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,403.0765,2024-01-14,399.0457,403.0765,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,46.5298,2024-01-14,46.0645,46.5298,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,493.5746,2024-01-14,488.6389,493.5746,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,388.3999,2024-01-15,384.5159,388.3999,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,107.3707,2024-01-15,106.297,107.3707,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,12.7058,2024-01-15,12.5787,12.7058,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,409.5761,2024-01-15,405.4803,409.5761,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,356.3601,2024-01-15,352.7965,356.3601,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,367.2135,2024-01-16,363.5414,367.2135,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,387.9225,2024-01-16,384.0433,387.9225,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,46.2819,2024-01-16,45.8191,46.2819,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,185.6482,2024-01-16,183.7917,185.6482,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,66.7758,2024-01-16,66.108,66.7758,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,432.9207,2024-01-17,428.5915,432.9207,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,315.4161,2024-01-17,312.2619,315.4161,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,172.14,2024-01-17,170.4186,172.14,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,41.1436,2024-01-17,40.7322,41.1436,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,162.3813,2024-01-17,160.7575,162.3813,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,169.3398,2024-01-18,167.6464,169.3398,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,367.507,2024-01-18,363.8319,367.507,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,322.4032,2024-01-18,319.1792,322.4032,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,444.7342,2024-01-18,440.2869,444.7342,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,241.3853,2024-01-18,238.9714,241.3853,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,68.6012,2024-01-19,67.9152,68.6012,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,359.4899,2024-01-19,355.895,359.4899,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,382.7847,2024-01-19,378.9569,382.7847,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,285.0258,2024-01-19,282.1755,285.0258,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,387.7739,2024-01-19,383.8962,387.7739,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,251.9598,2024-01-20,249.4402,251.9598,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,266.1391,2024-01-20,263.4777,266.1391,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,219.4951,2024-01-20,217.3001,219.4951,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,22.4554,2024-01-20,22.2308,22.4554,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,62.8668,2024-01-20,62.2381,62.8668,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,25.4003,2024-01-21,25.1463,25.4003,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,321.8411,2024-01-21,318.6227,321.8411,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,164.0344,2024-01-21,162.3941,164.0344,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,259.1996,2024-01-21,256.6076,259.1996,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,454.7076,2024-01-21,450.1605,454.7076,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,132.1532,2024-01-22,130.8317,132.1532,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,211.0876,2024-01-22,208.9767,211.0876,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,380.2201,2024-01-22,376.4179,380.2201,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,122.1111,2024-01-22,120.89,122.1111,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,47.7202,2024-01-22,47.243,47.7202,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,151.9782,2024-01-23,150.4584,151.9782,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,88.9984,2024-01-23,88.1084,88.9984,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,465.5518,2024-01-23,460.8963,465.5518,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,405.979,2024-01-23,401.9192,405.979,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,320.3678,2024-01-23,317.1641,320.3678,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,437.0157,2024-01-24,432.6455,437.0157,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,403.7993,2024-01-24,399.7613,403.7993,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,101.4193,2024-01-24,100.4051,101.4193,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,447.3539,2024-01-24,442.8804,447.3539,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,274.2777,2024-01-24,271.5349,274.2777,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,405.6457,2024-01-25,401.5892,405.6457,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,449.0847,2024-01-25,444.5939,449.0847,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,165.8217,2024-01-25,164.1635,165.8217,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,63.9254,2024-01-25,63.2861,63.9254,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,121.6882,2024-01-25,120.4713,121.6882,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,219.2828,2024-01-26,217.09,219.2828,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,410.8272,2024-01-26,406.7189,410.8272,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,431.758,2024-01-26,427.4404,431.758,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,13.4065,2024-01-26,13.2724,13.4065,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,260.2662,2024-01-26,257.6635,260.2662,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,214.5314,2024-01-27,212.3861,214.5314,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,118.8328,2024-01-27,117.6445,118.8328,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,68.734,2024-01-27,68.0467,68.734,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,175.4314,2024-01-27,173.6771,175.4314,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,472.0258,2024-01-27,467.3055,472.0258,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,168.3694,2024-01-28,166.6857,168.3694,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,264.2074,2024-01-28,261.5653,264.2074,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,354.4793,2024-01-28,350.9345,354.4793,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,188.1785,2024-01-28,186.2967,188.1785,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,486.1732,2024-01-28,481.3115,486.1732,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,481.5992,2024-01-29,476.7832,481.5992,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,133.3733,2024-01-29,132.0396,133.3733,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,253.6518,2024-01-29,251.1153,253.6518,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,157.4304,2024-01-29,155.8561,157.4304,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,149.5718,2024-01-29,148.0761,149.5718,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,28.0746,2024-01-30,27.7939,28.0746,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,308.6865,2024-01-30,305.5996,308.6865,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,256.3127,2024-01-30,253.7496,256.3127,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,35.2246,2024-01-30,34.8724,35.2246,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,146.5368,2024-01-30,145.0714,146.5368,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,455.0503,2024-01-31,450.4998,455.0503,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,127.3853,2024-01-31,126.1114,127.3853,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,80.9985,2024-01-31,80.1885,80.9985,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,249.8319,2024-01-31,247.3336,249.8319,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,492.9687,2024-01-31,488.039,492.9687,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,128.6071,2024-02-01,127.321,128.6071,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,339.3464,2024-02-01,335.9529,339.3464,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,383.1936,2024-02-01,379.3617,383.1936,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,126.4424,2024-02-01,125.178,126.4424,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,366.826,2024-02-01,363.1577,366.826,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,190.2137,2024-02-02,188.3116,190.2137,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,319.8299,2024-02-02,316.6316,319.8299,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,320.4296,2024-02-02,317.2253,320.4296,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,272.5296,2024-02-02,269.8043,272.5296,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,54.242,2024-02-02,53.6996,54.242,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,419.2982,2024-02-03,415.1052,419.2982,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,167.1822,2024-02-03,165.5104,167.1822,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,101.3941,2024-02-03,100.3802,101.3941,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,29.9798,2024-02-03,29.68,29.9798,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,299.5375,2024-02-03,296.5421,299.5375,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,342.0065,2024-02-04,338.5864,342.0065,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,18.128,2024-02-04,17.9467,18.128,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,260.9256,2024-02-04,258.3163,260.9256,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,120.9829,2024-02-04,119.7731,120.9829,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,326.1347,2024-02-04,322.8734,326.1347,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,95.4396,2024-02-05,94.4852,95.4396,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,348.5595,2024-02-05,345.0739,348.5595,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,199.5003,2024-02-05,197.5053,199.5003,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,468.9977,2024-02-05,464.3077,468.9977,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,77.3853,2024-02-05,76.6114,77.3853,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,177.1225,2024-02-06,175.3513,177.1225,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,65.602,2024-02-06,64.946,65.602,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,463.0999,2024-02-06,458.4689,463.0999,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,439.8963,2024-02-06,435.4973,439.8963,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,136.3914,2024-02-06,135.0275,136.3914,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,333.3922,2024-02-07,330.0583,333.3922,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,410.4389,2024-02-07,406.3345,410.4389,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,282.0484,2024-02-07,279.2279,282.0484,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,269.5288,2024-02-07,266.8335,269.5288,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,128.5076,2024-02-07,127.2225,128.5076,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,55.6204,2024-02-08,55.0642,55.6204,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,449.6357,2024-02-08,445.1393,449.6357,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,451.2048,2024-02-08,446.6928,451.2048,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,320.2197,2024-02-08,317.0175,320.2197,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,176.1246,2024-02-08,174.3634,176.1246,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+119551,Axis Bluechip Fund — Growth,181.1127,2024-02-09,179.3016,181.1127,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+120503,Mirae Asset Large Cap Fund — Growth,365.7183,2024-02-09,362.0611,365.7183,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+122639,SBI Small Cap Fund — Growth,449.584,2024-02-09,445.0882,449.584,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+125497,HDFC Mid-Cap Opportunities Fund — Growth,444.6723,2024-02-09,440.2256,444.6723,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+118989,ICICI Prudential Technology Fund — Growth,392.139,2024-02-09,388.2176,392.139,Demo AMC,True,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+-1,BAD_CODE,100.0,2024-01-01,99.0,100.0,Demo,False,False,demo_nav_data.csv,2026-06-12T18:44:29,True
+,NULL_CODE,,,,,Demo,False,False,demo_nav_data.csv,2026-06-12T18:44:29,True

@@ -1,0 +1,4 @@
+filename,raw_rows,raw_cols,duplicates_removed,bad_dates_removed,invalid_codes_removed,nulls_imputed,outliers_removed,final_rows,final_cols,issues_found,issue_summary
+nav_history.csv,10980,9,25,5,7,0,7,7798,17,4,25 duplicates removed | 5 bad dates dropped in 'nav_date' | 7 invalid scheme_codes dropped | 7 NAV outliers/nulls removed from 'nav'
+investor_transactions.csv,2015,15,15,15,0,25,0,1985,23,3,15 duplicates removed | 15 bad dates dropped in 'transaction_date' | 10 negative values nulled in 'units'
+scheme_performance.csv,120,16,0,0,0,10,5,120,24,2,5 expense_ratio values capped at 3.0% | 5 negative values nulled in 'aum_cr'

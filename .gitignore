@@ -1,0 +1,36 @@
+# =============================================================================
+# Git Exclusions for Mutual Fund Analytics Capstone Project
+# =============================================================================
+
+# Databases (schema.sql is tracked instead)
+*.db
+data/db/*.db
+
+# Python & Jupyter Cache / Temporary Files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.ipynb_checkpoints/
+.pytest_cache/
+.tox/
+.coverage
+htmlcov/
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDE and System Files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs & Scratch Directories
+logs/
+scratch/
+temp/
+tmp/
