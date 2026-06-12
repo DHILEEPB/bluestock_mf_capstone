@@ -794,149 +794,250 @@ def build_pdf(filename):
 # ----------------------------------------------------------------------
 # 3. PPTX PRESENTATION GENERATOR (python-pptx)
 # ----------------------------------------------------------------------
-def apply_slide_background(slide, color):
+# Color Palette Constants
+COLOR_BG_CREAM = RGBColor(250, 247, 240)   # #FAF7F0
+COLOR_NAVY = RGBColor(15, 23, 60)          # #0F173C
+COLOR_LIGHT_BLUE = RGBColor(173, 216, 230) # #ADD8E6
+COLOR_CORAL_PINK = RGBColor(220, 120, 120) # #DC7878
+COLOR_TEXT_DARK = RGBColor(40, 40, 60)     # #28283C
+
+def apply_cream_background(slide):
     background = slide.background
     fill = background.fill
     fill.solid()
-    fill.fore_color.rgb = color
+    fill.fore_color.rgb = COLOR_BG_CREAM
 
-def add_slide_header(slide, title_text, category_text="BLUESTOCK MUTUAL FUND ANALYTICS"):
-    # Category Tracker
-    cat_box = slide.shapes.add_textbox(Inches(0.75), Inches(0.4), Inches(10), Inches(0.3))
-    tf_cat = cat_box.text_frame
-    tf_cat.word_wrap = True
-    p_cat = tf_cat.paragraphs[0]
-    p_cat.text = category_text.upper()
-    p_cat.font.name = 'Calibri'
-    p_cat.font.size = Pt(8.5)
-    p_cat.font.bold = True
-    p_cat.font.color.rgb = RGBColor(120, 120, 120) # Muted gray
+def draw_cover_geometry(slide):
+    apply_cream_background(slide)
+    
+    # Left light-blue panel block (vertical)
+    left_panel = slide.shapes.add_shape(
+        MSO_SHAPE.RECTANGLE, Inches(0), Inches(0), Inches(4.5), Inches(7.5)
+    )
+    left_panel.fill.solid()
+    left_panel.fill.fore_color.rgb = COLOR_LIGHT_BLUE
+    left_panel.line.fill.background()
+    
+    # Navy top-right semicircle/arc
+    arc = slide.shapes.add_shape(
+        MSO_SHAPE.OVAL, Inches(10.2), Inches(-2.5), Inches(5.5), Inches(5.5)
+    )
+    arc.fill.solid()
+    arc.fill.fore_color.rgb = COLOR_NAVY
+    arc.line.fill.background()
+    
+    # Coral/pink accent block in bottom-left overlap
+    accent = slide.shapes.add_shape(
+        MSO_SHAPE.RECTANGLE, Inches(2.2), Inches(5.2), Inches(3.5), Inches(0.8)
+    )
+    accent.fill.solid()
+    accent.fill.fore_color.rgb = COLOR_CORAL_PINK
+    accent.line.fill.background()
 
-    # Main Title
-    title_box = slide.shapes.add_textbox(Inches(0.75), Inches(0.55), Inches(11.83), Inches(0.8))
-    tf_title = title_box.text_frame
-    tf_title.word_wrap = True
-    p_title = tf_title.paragraphs[0]
-    p_title.text = title_text
-    p_title.font.name = 'Georgia'
-    p_title.font.size = Pt(26)
-    p_title.font.bold = True
-    p_title.font.color.rgb = RGBColor(0, 0, 0) # Black
+def draw_content_geometry(slide, slide_number):
+    apply_cream_background(slide)
+    
+    # Navy quarter-circle (pie wedge) top-left corner
+    wedge = slide.shapes.add_shape(
+        MSO_SHAPE.OVAL, Inches(-0.6), Inches(-0.6), Inches(1.2), Inches(1.2)
+    )
+    wedge.fill.solid()
+    wedge.fill.fore_color.rgb = COLOR_NAVY
+    wedge.line.fill.background()
+    
+    # Coral/pink accent dot top-left
+    dot = slide.shapes.add_shape(
+        MSO_SHAPE.OVAL, Inches(0.8), Inches(0.8), Inches(0.15), Inches(0.15)
+    )
+    dot.fill.solid()
+    dot.fill.fore_color.rgb = COLOR_CORAL_PINK
+    dot.line.fill.background()
+    
+    # Slide number top-right
+    num_box = slide.shapes.add_textbox(Inches(12.0), Inches(0.4), Inches(0.8), Inches(0.3))
+    tf = num_box.text_frame
+    p = tf.paragraphs[0]
+    p.text = str(slide_number)
+    p.font.name = 'Calibri'
+    p.font.size = Pt(10)
+    p.font.bold = True
+    p.font.color.rgb = COLOR_NAVY
+    p.alignment = PP_ALIGN.RIGHT
 
-    # Thin separator line
-    line = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.75), Inches(1.3), Inches(11.83), Inches(0.015))
+def add_content_title(slide, title_text):
+    # Main title: ALL CAPS, bold navy
+    title_box = slide.shapes.add_textbox(Inches(1.5), Inches(0.35), Inches(10), Inches(0.7))
+    tf = title_box.text_frame
+    tf.word_wrap = True
+    tf.margin_left = Inches(0)
+    tf.margin_top = Inches(0)
+    p = tf.paragraphs[0]
+    p.text = title_text.upper()
+    p.font.name = 'Calibri'
+    p.font.size = Pt(26)
+    p.font.bold = True
+    p.font.color.rgb = COLOR_NAVY
+    
+    # Thin horizontal rule directly below title
+    line = slide.shapes.add_shape(
+        MSO_SHAPE.RECTANGLE, Inches(1.5), Inches(1.15), Inches(11.08), Inches(0.03)
+    )
     line.fill.solid()
-    line.fill.fore_color.rgb = RGBColor(210, 210, 210) # Light grey line
+    line.fill.fore_color.rgb = COLOR_NAVY
     line.line.fill.background()
 
-def create_card_shape(slide, left, top, width, height, bg_color=RGBColor(248, 250, 252)):
+def add_left_insight_zone(slide, section_title, bullets):
+    box = slide.shapes.add_textbox(Inches(1.5), Inches(1.6), Inches(4.5), Inches(5.0))
+    tf = box.text_frame
+    tf.word_wrap = True
+    tf.margin_left = Inches(0)
+    tf.margin_top = Inches(0)
+    
+    p_title = tf.paragraphs[0]
+    p_title.text = section_title
+    p_title.font.name = 'Calibri'
+    p_title.font.size = Pt(14)
+    p_title.font.bold = True
+    p_title.font.color.rgb = COLOR_NAVY
+    p_title.space_after = Pt(10)
+    
+    for pt in bullets:
+        p = tf.add_paragraph()
+        p.text = pt
+        p.font.name = 'Calibri'
+        p.font.size = Pt(11)
+        p.font.color.rgb = COLOR_TEXT_DARK
+        p.space_after = Pt(8)
+        p.line_spacing = 1.15
+
+def create_right_card(slide, left, top, width, height, title, body_lines, bg_color=None):
     card = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, left, top, width, height)
     card.fill.solid()
-    card.fill.fore_color.rgb = bg_color
-    # Thin light grey border
-    card.line.color.rgb = RGBColor(220, 224, 230)
-    card.line.width = Pt(1.0)
-    return card
+    card.fill.fore_color.rgb = bg_color if bg_color else COLOR_LIGHT_BLUE
+    card.line.fill.background()
+    
+    tb = slide.shapes.add_textbox(left, top, width, height)
+    tf = tb.text_frame
+    tf.word_wrap = True
+    tf.margin_left = Inches(0.2)
+    tf.margin_right = Inches(0.2)
+    tf.margin_top = Inches(0.15)
+    tf.margin_bottom = Inches(0.15)
+    
+    p_title = tf.paragraphs[0]
+    p_title.text = title
+    p_title.font.name = 'Calibri'
+    p_title.font.size = Pt(12)
+    p_title.font.bold = True
+    p_title.font.color.rgb = COLOR_NAVY
+    p_title.space_after = Pt(6)
+    
+    for line in body_lines:
+        p = tf.add_paragraph()
+        p.text = line
+        p.font.name = 'Calibri'
+        p.font.size = Pt(9.5)
+        p.font.color.rgb = COLOR_TEXT_DARK
+        p.space_after = Pt(3)
+        p.line_spacing = 1.1
+
+def draw_right_table(slide, rows, cols, left, top, width, height, headers, data, col_widths=None):
+    table_shape = slide.shapes.add_table(rows, cols, left, top, width, height)
+    table = table_shape.table
+    
+    if col_widths:
+        for idx, w in enumerate(col_widths):
+            table.columns[idx].width = w
+            
+    # Headers
+    for col_idx, h_text in enumerate(headers):
+        cell = table.cell(0, col_idx)
+        cell.text = h_text
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = COLOR_NAVY
+        p = cell.text_frame.paragraphs[0]
+        p.alignment = PP_ALIGN.CENTER
+        p.font.name = 'Calibri'
+        p.font.size = Pt(9.5)
+        p.font.bold = True
+        p.font.color.rgb = RGBColor(255, 255, 255)
+        
+    # Data Rows
+    for row_idx, row_data in enumerate(data):
+        for col_idx, text_val in enumerate(row_data):
+            cell = table.cell(row_idx + 1, col_idx)
+            cell.text = str(text_val)
+            cell.fill.solid()
+            # Alternate rows slightly
+            if row_idx % 2 == 0:
+                cell.fill.fore_color.rgb = RGBColor(240, 237, 230)
+            else:
+                cell.fill.fore_color.rgb = RGBColor(255, 255, 255)
+                
+            p = cell.text_frame.paragraphs[0]
+            if col_idx == 0 or (col_idx == 1 and cols > 3):
+                p.alignment = PP_ALIGN.LEFT
+            else:
+                p.alignment = PP_ALIGN.CENTER
+            p.font.name = 'Calibri'
+            p.font.size = Pt(9)
+            p.font.color.rgb = COLOR_TEXT_DARK
+            if col_idx == 0:
+                p.font.bold = True
 
 def build_pptx(filename):
     prs = Presentation()
-    
-    # Force 16:9 Widescreen layout
     prs.slide_width = Inches(13.333)
     prs.slide_height = Inches(7.5)
     
-    # Monochrome Palette
-    bg_white = RGBColor(255, 255, 255)
-    card_light = RGBColor(248, 250, 252)
-    text_black = RGBColor(0, 0, 0)
-    text_charcoal = RGBColor(51, 65, 85) # Slate/charcoal
-    text_gray = RGBColor(120, 120, 120)
-    accent_dark = RGBColor(40, 44, 55)
-    
     blank_layout = prs.slide_layouts[6]
     
-    # ==================================================================
-    # SLIDE 1: COVER SLIDE (Urban Monochrome Split Layout)
-    # ==================================================================
+    # ------------------------------------------------------------------
+    # SLIDE 1: COVER SLIDE
+    # ------------------------------------------------------------------
     slide = prs.slides.add_slide(blank_layout)
-    apply_slide_background(slide, bg_white)
+    draw_cover_geometry(slide)
     
-    # Left Side: Insert the template visual (concrete stairs)
-    img_path = str(PROJECT_ROOT / "reports" / "urban_stairs.png")
-    if os.path.exists(img_path):
-        slide.shapes.add_picture(img_path, Inches(0), Inches(0), Inches(5.4), Inches(7.5))
-    else:
-        # Fallback if image not found
-        left_box = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0), Inches(0), Inches(5.4), Inches(7.5))
-        left_box.fill.solid()
-        left_box.fill.fore_color.rgb = accent_dark
-        left_box.line.fill.background()
-    
-    # Right Side Text & Metadata
-    title_box = slide.shapes.add_textbox(Inches(5.95), Inches(1.8), Inches(6.6), Inches(4.5))
-    tf = title_box.text_frame
+    # Cover text on the right
+    text_box = slide.shapes.add_textbox(Inches(4.8), Inches(1.8), Inches(7.8), Inches(4.5))
+    tf = text_box.text_frame
     tf.word_wrap = True
     
-    # Category Tracker
-    p_cat = tf.paragraphs[0]
-    p_cat.text = "BLUESTOCK ANALYTICS • CAPSTONE SUBMISSION"
-    p_cat.font.name = 'Calibri'
-    p_cat.font.size = Pt(9.5)
-    p_cat.font.bold = True
-    p_cat.font.color.rgb = text_gray
+    p_sub_track = tf.paragraphs[0]
+    p_sub_track.text = "BLUESTOCK ANALYTICS • CAPSTONE SUBMISSION"
+    p_sub_track.font.name = 'Calibri'
+    p_sub_track.font.size = Pt(10)
+    p_sub_track.font.bold = True
+    p_sub_track.font.color.rgb = COLOR_CORAL_PINK
+    p_sub_track.space_after = Pt(12)
     
-    # Main Title
     p_title = tf.add_paragraph()
     p_title.text = "Mutual Fund Analytics & Risk Platform"
     p_title.font.name = 'Georgia'
     p_title.font.size = Pt(36)
     p_title.font.bold = True
-    p_title.font.color.rgb = text_black
-    p_title.space_before = Pt(12)
+    p_title.font.color.rgb = COLOR_NAVY
+    p_title.space_after = Pt(6)
     
-    # Subtitle
     p_sub = tf.add_paragraph()
-    p_sub.text = "Technical Case Study & Executive Dashboard Specifications"
+    p_sub.text = "A Relational Database, Weighted Performance Scorecard, Advanced Risk Engine, and Power BI Dashboard Design"
     p_sub.font.name = 'Georgia'
-    p_sub.font.size = Pt(14)
-    p_sub.font.color.rgb = text_gray
-    p_sub.space_before = Pt(6)
-    p_sub.space_after = Pt(24)
-
-    # Divider line on the right
-    line = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(5.95), Inches(3.7), Inches(6.6), Inches(0.015))
-    line.fill.solid()
-    line.fill.fore_color.rgb = RGBColor(210, 210, 210)
-    line.line.fill.background()
+    p_sub.font.size = Pt(13)
+    p_sub.font.color.rgb = COLOR_TEXT_DARK
+    p_sub.space_after = Pt(30)
     
-    # Presenter Details
-    details_box = slide.shapes.add_textbox(Inches(5.95), Inches(4.0), Inches(6.6), Inches(2.2))
-    tf_det = details_box.text_frame
-    tf_det.word_wrap = True
+    p_meta = tf.add_paragraph()
+    p_meta.text = (
+        "Presenter: Dhileep B, Lead Financial Data Analyst\n"
+        "Database Layer: Relational SQLite 3 STAR Schema\n"
+        "Analytics Stack: Python (pandas, scipy, yfinance) & Power BI\n"
+        "Project Status: Production Ready Clean Build"
+    )
+    p_meta.font.name = 'Calibri'
+    p_meta.font.size = Pt(11)
+    p_meta.font.color.rgb = COLOR_TEXT_DARK
+    p_meta.line_spacing = 1.3
     
-    details_text = [
-        ("Presenter:", " Dhileep B, Lead Quantitative Analyst"),
-        ("Database Layer:", " Relational SQLite 3 STAR Schema"),
-        ("Analytics Stack:", " Python (pandas, scipy, yfinance) & Power BI"),
-        ("Project Status:", " Production Ready Clean Build"),
-    ]
-    for idx, (label, val) in enumerate(details_text):
-        p = tf_det.paragraphs[0] if idx == 0 else tf_det.add_paragraph()
-        run_lbl = p.add_run()
-        run_lbl.text = label
-        run_lbl.font.name = 'Calibri'
-        run_lbl.font.size = Pt(11)
-        run_lbl.font.bold = True
-        run_lbl.font.color.rgb = text_black
-        
-        run_val = p.add_run()
-        run_val.text = val
-        run_val.font.name = 'Calibri'
-        run_val.font.size = Pt(11)
-        run_val.font.color.rgb = text_charcoal
-        p.space_after = Pt(4)
-
-    # Slide 1 Speaker Notes
     slide.notes_slide.notes_text_frame.text = (
         "Welcome to the board presentation of our Mutual Fund Analytics and Risk Platform. "
         "This platform represents a complete end-to-end data pipeline: from raw AMFI and client transaction "
@@ -944,829 +1045,425 @@ def build_pptx(filename):
         "finally, dynamic reporting in Power BI. Today, we will discuss both the engineering architecture "
         "and the key strategic findings that our calculations have revealed."
     )
-
-    # ==================================================================
+    
+    # ------------------------------------------------------------------
     # SLIDE 2: PROBLEM STATEMENT
-    # ==================================================================
+    # ------------------------------------------------------------------
     slide = prs.slides.add_slide(blank_layout)
-    apply_slide_background(slide, bg_white)
-    add_slide_header(slide, "The Problem: Data Fragmentation & Risk Uncertainty")
+    draw_content_geometry(slide, 2)
+    add_content_title(slide, "Problem Statement")
     
-    # 3-Column Card Layout
-    card_width = Inches(3.68)
-    card_height = Inches(4.5)
-    card_y = Inches(1.8)
+    add_left_insight_zone(slide, "Data Fragmentation & Risk Uncertainty", [
+        "Financial advisors and wealth managers struggle with fragmented data silos scattered across CSV/TXT formats.",
+        "Traditional batch reporting fails to track risk metrics in real-time, resulting in lagged rebalancing decisions.",
+        "Underlying portfolio concentration and extreme tail-risk exposures (VaR/CVaR) remain unquantified during market stress."
+    ])
     
-    problems = [
-        ("01", "DATA FRAGMENTATION", 
-         "Financial advisors manage data spread across scattered daily NAV files, raw client buy/sell transactions, and benchmark indices. The lack of a single unified data source limits rapid performance reporting.",
-         Inches(0.75)),
-        ("02", "REPORTING & ANALYTICAL LAGS", 
-         "Standard quarterly reports fail to calculate risk metrics in real-time. Manually evaluating portfolio drawdowns or calculating alpha/beta figures takes hours and delays critical rebalancing advice.",
-         Inches(4.82)),
-        ("03", "UNMANAGED SECTOR TAIL RISK", 
-         "Advisors recommend sectoral or specialty funds (e.g. technology funds) based on recent returns without quantifying underlying concentration (HHI) or daily expected tail losses (VaR/CVaR) during market drawdowns.",
-         Inches(8.89))
+    # Right Side: 3 rectangular cards
+    card_w = Inches(5.8)
+    card_h = Inches(1.3)
+    card_gap = Inches(0.2)
+    card_top_start = Inches(1.6)
+    card_left = Inches(6.5)
+    
+    problems_data = [
+        ("01 / DATA SILOS", ["Raw daily NAV feeds from AMFI, investor ledger ledgers, and market benchmarks exist in disjointed formats, requiring manual ingestion effort."]),
+        ("02 / REAL-TIME RISK LAG", ["Without standardized computation engines, performance statistics like Sharpe, Beta, or Alpha cannot be actively calculated."]),
+        ("03 / TAIL-RISK BLINDNESS", ["Advisors frequently recommend sectoral funds without measuring portfolio sector-level HHI or Expected Shortfalls."])
     ]
     
-    for num, header, desc, x_pos in problems:
-        # Draw Card
-        create_card_shape(slide, x_pos, card_y, card_width, card_height)
+    for idx, (title, lines) in enumerate(problems_data):
+        top_pos = card_top_start + idx * (card_h + card_gap)
+        create_right_card(slide, card_left, top_pos, card_w, card_h, title, lines)
         
-        # Add Content
-        txt_box = slide.shapes.add_textbox(x_pos, card_y, card_width, card_height)
-        tf_c = txt_box.text_frame
-        tf_c.word_wrap = True
-        tf_c.margin_left = Inches(0.25)
-        tf_c.margin_right = Inches(0.25)
-        tf_c.margin_top = Inches(0.25)
-        
-        # Large Number Accent (monochrome slate grey)
-        p_num = tf_c.paragraphs[0]
-        p_num.text = num
-        p_num.font.name = 'Georgia'
-        p_num.font.size = Pt(28)
-        p_num.font.bold = True
-        p_num.font.color.rgb = text_gray
-        
-        # Header text
-        p_hdr = tf_c.add_paragraph()
-        p_hdr.text = header
-        p_hdr.font.name = 'Georgia'
-        p_hdr.font.size = Pt(13)
-        p_hdr.font.bold = True
-        p_hdr.font.color.rgb = text_black
-        p_hdr.space_before = Pt(10)
-        p_hdr.space_after = Pt(12)
-        
-        # Description
-        p_desc = tf_c.add_paragraph()
-        p_desc.text = desc
-        p_desc.font.name = 'Calibri'
-        p_desc.font.size = Pt(10.5)
-        p_desc.font.color.rgb = text_charcoal
-        p_desc.line_spacing = 1.25
-
-    # Slide 2 Speaker Notes
     slide.notes_slide.notes_text_frame.text = (
-        "Let us look at the core problem we are addressing. Traditional wealth management is plagued by "
-        "data fragmentation. Advisors have client transaction files, AMFI publishes daily NAVs, and "
-        "benchmarks reside on separate APIs. Without a unified system, we cannot calculate real-time "
-        "performance or risk. This leads to hours of manual work and, more critically, leaves advisors "
-        "blind to tail risk when recommending highly concentrated sector funds. Our platform bridges this gap."
+        "Advisors face significant issues due to fragmented datasets. They are forced to consolidate AMFI data "
+        "and investor ledgers manually. Real-time metrics are non-existent, and tail-risk tracking is "
+        "ignored when recommending concentrated sector assets. Our platform addresses these structural gaps."
     )
-
-    # ==================================================================
-    # SLIDE 3: UNIFIED DATA ASSETS
-    # ==================================================================
+    
+    # ------------------------------------------------------------------
+    # SLIDE 3: PROJECT OBJECTIVES
+    # ------------------------------------------------------------------
     slide = prs.slides.add_slide(blank_layout)
-    apply_slide_background(slide, bg_white)
-    add_slide_header(slide, "Unified Integration: The Ingested Platform Inputs")
+    draw_content_geometry(slide, 3)
+    add_content_title(slide, "Project Objectives")
     
-    # 4-Column Card Layout
-    card_w4 = Inches(2.7)
-    card_h4 = Inches(4.5)
-    card_x_start = Inches(0.75)
-    card_gap = Inches(0.3)
+    add_left_insight_zone(slide, "Core Goals & Platform Scope", [
+        "1. Standardize Ingestion: Build an ETL pipeline to clean and structure transaction and daily price records.",
+        "2. Relational Warehouse: Design a STAR schema database using SQLite3 to query details efficiently.",
+        "3. Performance Scorecard: Implement a multi-factor ranking model using Sharpe, Alpha, Expense, and Drawdowns.",
+        "4. Risk Engine: Calculate expected tail losses using daily Value at Risk (VaR) and Expected Shortfall (CVaR).",
+        "5. Cohort Analytics: Model retail client retention trends and Systematic Investment Plan (SIP) continuity streaks.",
+        "6. Interactive BI: Build specifications for a custom-themed Power BI board."
+    ])
     
-    inputs = [
-        ("NAV HISTORY", "7,798 Clean Rows", 
-         "Ingested daily Net Asset Value history spanning a 3-year period (2022-2024) across 10 mutual funds. Establishes the core pricing baseline for return calculations."),
-        ("RETAIL TRANSACTIONS", "1,985 Ledger Records", 
-         "Granular client transactions covering 200 distinct investor profiles. Contains buy/sell classifications, amounts, and units for cohort analysis."),
-        ("MARKET BENCHMARKS", "Daily Index Feeds", 
-         "Fetched daily close pricing for Nifty 50 and Nifty 100 via the yfinance API to serve as market indices and risk baselines."),
-        ("PORTFOLIO HOLDINGS", "Stock-Level Weights", 
-         "Holdings allocations mapped across schemes to evaluate sector weights. Drives our Herfindahl-Hirschman Index (HHI) concentration calculations.")
-    ]
-    
-    for idx, (title, highlight, body) in enumerate(inputs):
-        x_pos = card_x_start + idx * (card_w4 + card_gap)
-        create_card_shape(slide, x_pos, card_y, card_w4, card_h4)
-        
-        txt_box = slide.shapes.add_textbox(x_pos, card_y, card_w4, card_h4)
-        tf_c = txt_box.text_frame
-        tf_c.word_wrap = True
-        tf_c.margin_left = Inches(0.2)
-        tf_c.margin_right = Inches(0.2)
-        tf_c.margin_top = Inches(0.25)
-        
-        p_title = tf_c.paragraphs[0]
-        p_title.text = title
-        p_title.font.name = 'Georgia'
-        p_title.font.size = Pt(12)
-        p_title.font.bold = True
-        p_title.font.color.rgb = text_gray
-        
-        p_hl = tf_c.add_paragraph()
-        p_hl.text = highlight
-        p_hl.font.name = 'Calibri'
-        p_hl.font.size = Pt(14)
-        p_hl.font.bold = True
-        p_hl.font.color.rgb = text_black
-        p_hl.space_before = Pt(8)
-        p_hl.space_after = Pt(12)
-        
-        p_body = tf_c.add_paragraph()
-        p_body.text = body
-        p_body.font.name = 'Calibri'
-        p_body.font.size = Pt(9.5)
-        p_body.font.color.rgb = text_charcoal
-        p_body.line_spacing = 1.2
-
-    # Slide 3 Speaker Notes
-    slide.notes_slide.notes_text_frame.text = (
-        "Here are the four pillars of our database. We ingest over seven thousand daily NAV records "
-        "directly from AMFI, and merge them with nearly two thousand granular client transaction rows. "
-        "To establish standard benchmarks, we fetch Nifty 50 and Nifty 100 prices using the Yahoo Finance API. "
-        "Lastly, we mapped stock-level portfolio holdings to evaluate sector-level allocations. "
-        "This establishes a unified, single source of truth for the first time."
-    )
-
-    # ==================================================================
-    # SLIDE 4: ETL PIPELINE & DB SCHEMA
-    # ==================================================================
-    slide = prs.slides.add_slide(blank_layout)
-    apply_slide_background(slide, bg_white)
-    add_slide_header(slide, "ETL Pipeline & SQLite STAR Schema Database Design")
-    
-    # Left Card: ETL Flow
-    left_card = create_card_shape(slide, Inches(0.75), Inches(1.8), Inches(5.7), Inches(4.5))
-    tf_l = left_card.text_frame
-    tf_l.word_wrap = True
-    tf_l.margin_left = Inches(0.3)
-    tf_l.margin_top = Inches(0.3)
-    
-    p_lh1 = tf_l.paragraphs[0]
-    p_lh1.text = "Ingestion Pipeline & Operations"
-    p_lh1.font.name = 'Georgia'
-    p_lh1.font.size = Pt(16)
-    p_lh1.font.bold = True
-    p_lh1.font.color.rgb = text_black
-    
-    etl_steps = [
-        "1. Schema Ingestion Check: Standardizes CSV headers and forces correct naming configurations.",
-        "2. Duplicate and Null Pruning: Purges identical ledger lines and imputes missing intermediate NAV entries.",
-        "3. SQL Loading Engine: Establishes a transaction and loads the dimension and fact tables into SQLite."
-    ]
-    for step in etl_steps:
-        p_s = tf_l.add_paragraph()
-        p_s.text = step
-        p_s.font.name = 'Calibri'
-        p_s.font.size = Pt(11)
-        p_s.font.color.rgb = text_charcoal
-        p_s.space_before = Pt(12)
-        p_s.line_spacing = 1.2
-        
-    # Right Card: Star Schema Schema
-    right_card = create_card_shape(slide, Inches(6.88), Inches(1.8), Inches(5.7), Inches(4.5))
-    tf_r = right_card.text_frame
-    tf_r.word_wrap = True
-    tf_r.margin_left = Inches(0.3)
-    tf_r.margin_top = Inches(0.3)
-    
-    p_rh1 = tf_r.paragraphs[0]
-    p_rh1.text = "Relational Star Schema Design"
-    p_rh1.font.name = 'Georgia'
-    p_rh1.font.size = Pt(16)
-    p_rh1.font.bold = True
-    p_rh1.font.color.rgb = text_black
-    
-    schema_details = [
-        "• Dimension Tables: dim_scheme (fund attributes), dim_amc (asset manager masters), dim_investor (client demographics & risk profiles), dim_date (unified time dimension).",
-        "• Central Fact Tables: fact_nav_history (pricing records), fact_investor_transactions (retail transaction ledger), fact_scheme_performance (returns summaries).",
-        "• Database Integrity: Primary key constraints, cascading foreign keys, and index keys on (date, scheme_code) to optimize analytical queries."
-    ]
-    for detail in schema_details:
-        p_d = tf_r.add_paragraph()
-        p_d.text = detail
-        p_d.font.name = 'Calibri'
-        p_d.font.size = Pt(10.5)
-        p_d.font.color.rgb = text_charcoal
-        p_d.space_before = Pt(10)
-        p_d.line_spacing = 1.2
-
-    # Slide 4 Speaker Notes
-    slide.notes_slide.notes_text_frame.text = (
-        "The left side displays our ETL flow, handled by python scripts. "
-        "We validate headers, prune duplicates, and forward-fill missing quotes to ensure database completeness. "
-        "The right side shows our database structure in SQLite. We modeled this as a STAR schema. "
-        "Separating the structural dimensions like schemes and investor profiles from the transactional facts "
-        "allows us to write clean and fast analytical SQL queries, and optimize the data loading process."
-    )
-
-    # ==================================================================
-    # SLIDE 5: ENGINEERING CHALLENGES
-    # ==================================================================
-    slide = prs.slides.add_slide(blank_layout)
-    apply_slide_background(slide, bg_white)
-    add_slide_header(slide, "Engineering Fallbacks: Handling Production Anomalies")
-    
-    # 3 horizontal blocks
-    block_h = Inches(1.25)
-    block_gap = Inches(0.25)
-    block_w = Inches(11.83)
-    
-    challenges = [
-        ("Plotly Image Export Fallback", "Headless tasks on Windows often freeze when running Plotly's static image exporter (Kaleido). We implemented a Matplotlib/Seaborn rendering fallback that automatically translates Plotly trace definitions and exports high-fidelity PNGs if Kaleido hangs.", text_black),
-        ("yfinance MultiIndex Flattening", "Downloading market indices via the Yahoo Finance API returns MultiIndexed columns on single tickers. The ingestion script programmatically flattens these column headers to prevent column shifting during dataframe serialization.", text_black),
-        ("Invalid Transaction Dates", "The raw transactional sheet contained anomalous text inputs (e.g. 'INVALID' string entries). The cleaning pipeline resolves this by parsing date fields with errors coerced, and purging NaT rows to preserve integrity.", text_black)
-    ]
-    
-    for idx, (title, body, color) in enumerate(challenges):
-        y_pos = Inches(1.8) + idx * (block_h + block_gap)
-        create_card_shape(slide, Inches(0.75), y_pos, block_w, block_h)
-        
-        txt_box = slide.shapes.add_textbox(Inches(0.75), y_pos, block_w, block_h)
-        tf_b = txt_box.text_frame
-        tf_b.word_wrap = True
-        tf_b.margin_left = Inches(0.3)
-        tf_b.margin_right = Inches(0.3)
-        tf_b.margin_top = Inches(0.15)
-        
-        p_t = tf_b.paragraphs[0]
-        p_t.text = title
-        p_t.font.name = 'Georgia'
-        p_t.font.size = Pt(13)
-        p_t.font.bold = True
-        p_t.font.color.rgb = color
-        
-        p_d = tf_b.add_paragraph()
-        p_d.text = body
-        p_d.font.name = 'Calibri'
-        p_d.font.size = Pt(10.5)
-        p_d.font.color.rgb = text_charcoal
-        p_d.space_before = Pt(4)
-        p_d.line_spacing = 1.15
-
-    # Slide 5 Speaker Notes
-    slide.notes_slide.notes_text_frame.text = (
-        "As part of building a production-ready application, we solved several real-world engineering issues. "
-        "First, we solved Plotly/Kaleido PDF export freezes on Windows by building a Matplotlib rendering fallback. "
-        "Second, we resolved yfinance API MultiIndex column flattening programmatically. "
-        "Third, we resolved raw file data anomalies, such as coercing string 'INVALID' transaction dates to NaT "
-        "and purging them before database load. This ensures the engine runs smoothly from start to finish."
-    )
-
-    # ==================================================================
-    # SLIDE 6: STATISTICAL EDA
-    # ==================================================================
-    slide = prs.slides.add_slide(blank_layout)
-    apply_slide_background(slide, bg_white)
-    add_slide_header(slide, "Exploratory Data Analysis: Key Statistical Insights")
-    
-    # 2 horizontal blocks
-    block_h2 = Inches(2.1)
-    
-    eda_insights = [
-        ("Scheme Co-movement & Diversification", "Computing the Pearson correlation matrix on daily returns reveals a highly integrated large-cap segment. All core large-cap funds display return correlations above 0.85. In contrast, the ICICI Prudential Technology Fund exhibits a daily correlation of only 0.42 to the core index. This highlights its significant diversification benefit, serving as a shock-absorber during standard large-cap pullbacks.", text_black),
-        ("Expense Ratio Drag (OLS Regression)", "We ran an Ordinary Least Squares (OLS) regression mapping return drag as a function of annual fund fees. The model confirms that expense ratios act as a systemic drag on performance. Active schemes with expense structures exceeding 1.10% (e.g. SBI Small Cap) consistently erode net compounding returns compared to cost-efficient peers with similar portfolios.", text_black)
-    ]
-    
-    for idx, (title, body, color) in enumerate(eda_insights):
-        y_pos = Inches(1.8) + idx * (block_h2 + Inches(0.3))
-        create_card_shape(slide, Inches(0.75), y_pos, block_w, block_h2)
-        
-        txt_box = slide.shapes.add_textbox(Inches(0.75), y_pos, block_w, block_h2)
-        tf_b = txt_box.text_frame
-        tf_b.word_wrap = True
-        tf_b.margin_left = Inches(0.3)
-        tf_b.margin_right = Inches(0.3)
-        tf_b.margin_top = Inches(0.2)
-        
-        p_t = tf_b.paragraphs[0]
-        p_t.text = title
-        p_t.font.name = 'Georgia'
-        p_t.font.size = Pt(15)
-        p_t.font.bold = True
-        p_t.font.color.rgb = color
-        
-        p_d = tf_b.add_paragraph()
-        p_d.text = body
-        p_d.font.name = 'Calibri'
-        p_d.font.size = Pt(11)
-        p_d.font.color.rgb = text_charcoal
-        p_d.space_before = Pt(8)
-        p_d.line_spacing = 1.25
-
-    # Slide 6 Speaker Notes
-    slide.notes_slide.notes_text_frame.text = (
-        "Our statistical EDA highlighted two key dynamics. "
-        "First, large-cap mutual funds show a high return correlation, meaning they provide minimal diversification "
-        "from each other. However, the ICICI Technology sectoral fund correlates at only 0.42, showing it works "
-        "well to diversify equity risk. Second, our OLS regression mapping returns to fee rates confirmed a strong, "
-        "negative fee drag on long-term compound growth. This underscores the importance of monitoring expense ratios."
-    )
-
-    # ==================================================================
-    # SLIDE 7: PERFORMANCE LEADERBOARD
-    # ==================================================================
-    slide = prs.slides.add_slide(blank_layout)
-    apply_slide_background(slide, bg_white)
-    add_slide_header(slide, "The Performance Scorecard Leaderboard (Day 4)")
-    
-    # Left: Text context, Right: Table
-    txt_box = slide.shapes.add_textbox(Inches(0.75), Inches(1.8), Inches(3.8), Inches(4.5))
-    tf_l = txt_box.text_frame
-    tf_l.word_wrap = True
-    tf_l.margin_left = Inches(0)
-    
-    p_lh = tf_l.paragraphs[0]
-    p_lh.text = "Multi-Factor Scoring"
-    p_lh.font.name = 'Georgia'
-    p_lh.font.size = Pt(16)
-    p_lh.font.bold = True
-    p_lh.font.color.rgb = text_black
-    
-    p_body = tf_l.add_paragraph()
-    p_body.text = (
-        "We scored the 10 mutual funds based on a weighted rank model:\n\n"
-        "• 30% 3-Year CAGR Rank\n"
-        "• 25% Sharpe Ratio Rank\n"
-        "• 20% CAPM Alpha Rank\n"
-        "• 15% Expense Ratio Rank (Inverse)\n"
-        "• 10% Max Drawdown Rank (Inverse)\n\n"
-        "DSP Top 100 ranks #1 due to high annualized active Alpha (28.88%) and a Sharpe of 1.22.\n\n"
-        "Mirae Asset Large Cap ranks #2 due to strong drawdown control (-17.47%)."
-    )
-    p_body.font.name = 'Calibri'
-    p_body.font.size = Pt(10)
-    p_body.font.color.rgb = text_charcoal
-    p_body.space_before = Pt(8)
-    p_body.line_spacing = 1.2
-    
-    # Right: PPTX Table shape
-    rows = 7
-    cols = 7
-    left = Inches(4.8)
-    top = Inches(1.8)
-    width = Inches(7.78)
-    height = Inches(4.5)
-    
-    table_shape = slide.shapes.add_table(rows, cols, left, top, width, height)
-    table = table_shape.table
-    
-    # Set Column Widths
-    table.columns[0].width = Inches(0.65) # Rank
-    table.columns[1].width = Inches(2.28) # Scheme
-    table.columns[2].width = Inches(1.0)  # CAGR 3Y
-    table.columns[3].width = Inches(0.9)  # Sharpe
-    table.columns[4].width = Inches(0.9)  # Alpha
-    table.columns[5].width = Inches(1.0)  # Max DD
-    table.columns[6].width = Inches(0.95) # Expense
-    
-    # Table Headers (monochrome charcoal style)
-    headers = ["Rank", "Scheme Name", "3Y CAGR", "Sharpe", "Alpha", "Max DD", "Expense"]
-    for col_idx, h_text in enumerate(headers):
-        cell = table.cell(0, col_idx)
-        cell.text = h_text
-        cell.fill.solid()
-        cell.fill.fore_color.rgb = accent_dark
-        p = cell.text_frame.paragraphs[0]
-        p.alignment = PP_ALIGN.CENTER
-        p.font.name = 'Georgia'
-        p.font.size = Pt(9.5)
-        p.font.bold = True
-        p.font.color.rgb = bg_white
-        
-    # Populate Table Rows
-    for row_idx, row_data in enumerate(scorecard_data[:6]):
-        cells_data = [
-            f"#{row_data['rank']}",
-            row_data['name'],
-            f"{row_data['cagr_3y']:.1%}",
-            f"{row_data['sharpe']:.2f}",
-            f"{row_data['alpha']:.1%}",
-            f"{row_data['max_dd']:.1%}",
-            f"{row_data['expense']:.2%}"
+    # Right Side: Tech Stack Card
+    create_right_card(
+        slide, Inches(6.5), Inches(1.6), Inches(5.8), Inches(4.5),
+        "TECHNOLOGY STACK & CAPABILITIES",
+        [
+            "• Execution Layer: Python 3.10+ (Data Ingestion, Cleansing)",
+            "• Computational Core: pandas, numpy, scipy, statsmodels",
+            "• Relational Storage: SQLite3 DB with composite indexes",
+            "• Documentation Engines: ReportLab (PDF), python-pptx (PPTX)",
+            "• Interactive BI Dashboard: Power BI Desktop & DAX Engines",
+            "",
+            "The entire framework runs programmatically, allowing automated document compilation directly from processed datasets."
         ]
-        
-        for col_idx, text_val in enumerate(cells_data):
-            cell = table.cell(row_idx + 1, col_idx)
-            cell.text = text_val
-            cell.fill.solid()
-            # Alternate row background (very light slate grey and pure white)
-            if row_idx % 2 == 0:
-                cell.fill.fore_color.rgb = RGBColor(245, 247, 250)
-            else:
-                cell.fill.fore_color.rgb = bg_white
-                
-            p = cell.text_frame.paragraphs[0]
-            if col_idx == 1:
-                p.alignment = PP_ALIGN.LEFT
-            else:
-                p.alignment = PP_ALIGN.CENTER
-            p.font.name = 'Calibri'
-            p.font.size = Pt(9)
-            if col_idx == 0:
-                p.font.bold = True
-                p.font.color.rgb = text_black
-            else:
-                p.font.color.rgb = text_charcoal
-
-    # Slide 7 Speaker Notes
+    )
+    
     slide.notes_slide.notes_text_frame.text = (
-        "This slide presents the results of our multi-factor performance scorecard. "
-        "We ranked all 10 mutual funds based on 3Y CAGR, Sharpe ratio, CAPM Alpha, expense ratio, "
-        "and maximum drawdown. As you can see in the table on the right, DSP Top 100 Equity "
-        "ranked first due to an exceptional 39.8% CAGR and 28.8% annualized Alpha. "
-        "Mirae Asset Large Cap ranked second, driven by its industry-leading capital protection "
-        "with a drawdown of only -17.5%."
+        "We set six core platform objectives to unify ingestion, structure the SQLite database, "
+        "rank mutual funds, model tail risks, trace investor cohorts, and design the Power BI specs. "
+        "The right card highlights our fully programmatic Python/SQLite tech stack."
     )
-
-    # ==================================================================
-    # SLIDE 8: PORTFOLIO CONCENTRATION & SECTOR HHI
-    # ==================================================================
+    
+    # ------------------------------------------------------------------
+    # SLIDE 4: DATA SOURCES & ARCHITECTURE
+    # ------------------------------------------------------------------
     slide = prs.slides.add_slide(blank_layout)
-    apply_slide_background(slide, bg_white)
-    add_slide_header(slide, "Portfolio Concentration & Sector HHI Analysis (Day 6)")
+    draw_content_geometry(slide, 4)
+    add_content_title(slide, "Data Sources & Architecture")
     
-    # Left text box
-    txt_box = slide.shapes.add_textbox(Inches(0.75), Inches(1.8), Inches(4.5), Inches(4.5))
-    tf_l = txt_box.text_frame
-    tf_l.word_wrap = True
-    tf_l.margin_left = Inches(0)
+    add_left_insight_zone(slide, "Platform Data Inputs", [
+        "The analytics platform integrates three separate data layers to construct a single source of truth:",
+        "• Daily NAV History: Ingests 7,798 raw NAV quotes from AMFI (10 funds).",
+        "• Transaction Ledgers: Processes 1,985 retail buy/sell/SIP transactions (200 folios).",
+        "• Market Benchmarks: Fetches Nifty 50 and Nifty 100 closing prices via yfinance.",
+        "• Portfolio Holdings: Imports sector-level allocations for HHI concentration scoring."
+    ])
     
-    p_lh = tf_l.paragraphs[0]
-    p_lh.text = "Herfindahl-Hirschman Index"
-    p_lh.font.name = 'Georgia'
-    p_lh.font.size = Pt(16)
-    p_lh.font.bold = True
-    p_lh.font.color.rgb = text_black
+    # Right Side: Architecture Flow Cards (drawn as shapes)
+    arch_left = Inches(6.5)
+    arch_w = Inches(5.8)
+    arch_h = Inches(1.2)
+    arch_gap = Inches(0.3)
     
-    p_body = tf_l.add_paragraph()
-    p_body.text = (
-        "We calculated sector-level concentrations for each scheme using holdings data:\n\n"
-        "• High Concentration (HHI > 2,500):\n"
-        "ICICI Prudential Technology Fund (HHI = 7,288.0) is highly concentrated due to its 85% tech sector allocation.\n\n"
-        "• Moderate Concentration (HHI 1,500 - 2,500):\n"
-        "Diversified Large Cap and Flexi Cap schemes maintain moderate concentrations (~1,827.16) spread across financial services, energy, tech, consumer goods, and healthcare.\n\n"
-        "• Low Concentration (HHI < 1,500):\n"
-        "HDFC Mid-Cap Opportunities shows high sector-level diversification (HHI = 1,327.42)."
-    )
-    p_body.font.name = 'Calibri'
-    p_body.font.size = Pt(10.5)
-    p_body.font.color.rgb = text_charcoal
-    p_body.space_before = Pt(8)
-    p_body.line_spacing = 1.2
-
-    # Right: visual cards/bars for Top 4 funds (monochrome clean style)
-    hhi_list = [
-        ("ICICI Pru Technology", "7,288.00", "HIGH CONCENTRATION", text_black, text_gray),
-        ("Mirae Asset Large Cap", "1,827.16", "MODERATE CONCENTRATION", text_black, text_gray),
-        ("DSP Top 100 Equity", "1,827.16", "MODERATE CONCENTRATION", text_black, text_gray),
-        ("HDFC Mid-Cap Opp", "1,327.42", "LOW CONCENTRATION", text_black, text_gray)
+    flows = [
+        ("STAGE 1: RAW INGESTION", ["AMFI daily NAVs + Client transaction sheets + Yahoo Finance API"]),
+        ("STAGE 2: ETL & SQL WAREHOUSE", ["SQLite Star Schema Database (mutual_funds.db) with composite indexes"]),
+        ("STAGE 3: QUANTITATIVE & BI LAYER", ["Weighted Scorecards, daily VaR/CVaR, and dark-themed Power BI dashboards"])
     ]
     
-    card_h = Inches(0.95)
-    card_gap = Inches(0.18)
-    for idx, (name, val, label, border_col, text_col) in enumerate(hhi_list):
-        y_pos = Inches(1.8) + idx * (card_h + card_gap)
-        create_card_shape(slide, Inches(5.8), y_pos, Inches(6.78), card_h)
+    for idx, (title, lines) in enumerate(flows):
+        top_pos = Inches(1.6) + idx * (arch_h + arch_gap)
+        create_right_card(slide, arch_left, top_pos, arch_w, arch_h, title, lines)
         
-        # Left Text (Scheme Name & Label)
-        tb_name = slide.shapes.add_textbox(Inches(5.8), y_pos, Inches(4.5), card_h)
-        tf_n = tb_name.text_frame
-        tf_n.word_wrap = True
-        tf_n.margin_left = Inches(0.2)
-        tf_n.margin_top = Inches(0.15)
-        
-        p_name = tf_n.paragraphs[0]
-        p_name.text = name
-        p_name.font.name = 'Calibri'
-        p_name.font.size = Pt(13)
-        p_name.font.bold = True
-        p_name.font.color.rgb = text_black
-        
-        p_lbl = tf_n.add_paragraph()
-        p_lbl.text = label
-        p_lbl.font.name = 'Calibri'
-        p_lbl.font.size = Pt(8.5)
-        p_lbl.font.bold = True
-        p_lbl.font.color.rgb = text_col
-        p_lbl.space_before = Pt(2)
-        
-        # Right Text (Big Number HHI)
-        tb_val = slide.shapes.add_textbox(Inches(10.3), y_pos, Inches(2.28), card_h)
-        tf_v = tb_val.text_frame
-        tf_v.word_wrap = True
-        tf_v.margin_right = Inches(0.25)
-        tf_v.margin_top = Inches(0.12)
-        
-        p_val = tf_v.paragraphs[0]
-        p_val.text = val
-        p_val.alignment = PP_ALIGN.RIGHT
-        p_val.font.name = 'Georgia'
-        p_val.font.size = Pt(22)
-        p_val.font.bold = True
-        p_val.font.color.rgb = border_col
-
-    # Slide 8 Speaker Notes
     slide.notes_slide.notes_text_frame.text = (
-        "In this slide, we explore portfolio concentration using the Herfindahl-Hirschman Index, or HHI. "
-        "The ICICI Technology sectoral fund shows an extremely high HHI concentration of 7,288, which is "
-        "to be expected given its mandated exposure to a single sector. "
-        "Standard diversified funds, like Mirae Asset Large Cap, maintain moderate concentration "
-        "scores around 1,827, showing healthy asset-class and sector-level diversification."
+        "Here are the inputs of the platform: 7,798 AMFI pricing records, 1,985 retail transactions, and "
+        "Nifty indices from yfinance. The flow on the right represents the ETL lifecycle, database warehouse, "
+        "and analytical visualization layers."
     )
-
-    # ==================================================================
-    # SLIDE 9: DOWNSIDE TAIL RISK (VaR & CVaR)
-    # ==================================================================
+    
+    # ------------------------------------------------------------------
+    # SLIDE 5: ETL PIPELINE & DATABASE DESIGN
+    # ------------------------------------------------------------------
     slide = prs.slides.add_slide(blank_layout)
-    apply_slide_background(slide, bg_white)
-    add_slide_header(slide, "Downside Tail Risk: Daily Historical VaR & CVaR")
+    draw_content_geometry(slide, 5)
+    add_content_title(slide, "ETL Pipeline & Database Design")
     
-    # Left text box
-    txt_box = slide.shapes.add_textbox(Inches(0.75), Inches(1.8), Inches(4.5), Inches(4.5))
-    tf_l = txt_box.text_frame
-    tf_l.word_wrap = True
-    tf_l.margin_left = Inches(0)
+    add_left_insight_zone(slide, "ETL Data Operations", [
+        "To ensure data integrity, the pipeline runs key cleaning operations:",
+        "• Schema Validation: Forces standardized naming and column data types.",
+        "• Date Parsing: Coerces raw date fields and purges NaT anomalies.",
+        "• Deduplication: Removes duplicate transaction rows to preserve transaction history.",
+        "• Imputation: Forward-fills missing NAV quotes to keep return continuities."
+    ])
     
-    p_lh = tf_l.paragraphs[0]
-    p_lh.text = "Risk Expected Shortfall"
-    p_lh.font.name = 'Georgia'
-    p_lh.font.size = Pt(16)
-    p_lh.font.bold = True
-    p_lh.font.color.rgb = text_black
-    
-    p_body = tf_l.add_paragraph()
-    p_body.text = (
-        "We evaluated extreme tail risk using daily returns:\n\n"
-        "• Value at Risk (95% VaR):\n"
-        "The minimum threshold loss expected on any single trading day with 95% confidence.\n\n"
-        "• Conditional VaR (95% CVaR):\n"
-        "The average expected loss during the worst 5% of trading days. Also known as Expected Shortfall.\n\n"
-        "Sector concentration directly amplifies tail risk. The tech sectoral fund displays significantly higher daily losses than diversified large-cap peers."
+    # Right Side: Schema details
+    create_right_card(
+        slide, Inches(6.5), Inches(1.6), Inches(5.8), Inches(4.5),
+        "SQLITE STAR SCHEMA WAREHOUSE",
+        [
+            "Master Dimension Tables:",
+            "  • dim_scheme (fund code, name, category, AMC ID)",
+            "  • dim_investor (investor ID, city, state, risk profile)",
+            "  • dim_date (date string, year, quarter, month)",
+            "",
+            "Transactional Fact Tables:",
+            "  • fact_nav_history (scheme code, date, daily NAV)",
+            "  • fact_investor_transactions (ID, investor, scheme, type, amount)",
+            "  • fact_scheme_performance (calculated returns & ratios)",
+            "",
+            "Optimizations: Composite indexes on (date, scheme_code) to enable instantaneous BI loads."
+        ]
     )
-    p_body.font.name = 'Calibri'
-    p_body.font.size = Pt(10.5)
-    p_body.font.color.rgb = text_charcoal
-    p_body.space_before = Pt(8)
-    p_body.line_spacing = 1.25
-
-    # Right: Table comparing VaR & CVaR (Monochrome clean layout)
-    rows_r = 6
-    cols_r = 3
-    left_r = Inches(5.8)
-    top_r = Inches(1.8)
-    width_r = Inches(6.78)
-    height_r = Inches(4.5)
     
-    table_shape = slide.shapes.add_table(rows_r, cols_r, left_r, top_r, width_r, height_r)
-    table_r = table_shape.table
-    
-    # Set Columns
-    table_r.columns[0].width = Inches(3.18) # Scheme
-    table_r.columns[1].width = Inches(1.8)  # Daily VaR (95%)
-    table_r.columns[2].width = Inches(1.8)  # Daily CVaR (95%)
-    
-    headers_r = ["Scheme Name", "Daily VaR (95%)", "Daily CVaR (95%)"]
-    for col_idx, h_text in enumerate(headers_r):
-        cell = table_r.cell(0, col_idx)
-        cell.text = h_text
-        cell.fill.solid()
-        cell.fill.fore_color.rgb = accent_dark
-        p = cell.text_frame.paragraphs[0]
-        p.alignment = PP_ALIGN.CENTER
-        p.font.name = 'Georgia'
-        p.font.size = Pt(10.5)
-        p.font.bold = True
-        p.font.color.rgb = bg_white
-        
-    risk_report_data = [
-        ("ICICI Pru Technology", 0.02332, 0.03009),
-        ("DSP Top 100 Equity", 0.02275, 0.02985),
-        ("Nippon India Large Cap", 0.02155, 0.02890),
-        ("Mirae Asset Large Cap", 0.02081, 0.02760),
-        ("Axis Bluechip", 0.02052, 0.02710),
-    ]
-    for row_idx, (name, var, cvar) in enumerate(risk_report_data):
-        cells_val = [name, f"{var:.2%}", f"{cvar:.2%}"]
-        for col_idx, text_val in enumerate(cells_val):
-            cell = table_r.cell(row_idx + 1, col_idx)
-            cell.text = text_val
-            cell.fill.solid()
-            if row_idx % 2 == 0:
-                cell.fill.fore_color.rgb = RGBColor(245, 247, 250)
-            else:
-                cell.fill.fore_color.rgb = bg_white
-                
-            p = cell.text_frame.paragraphs[0]
-            if col_idx == 0:
-                p.alignment = PP_ALIGN.LEFT
-                p.font.bold = True
-                p.font.color.rgb = text_black
-            else:
-                p.alignment = PP_ALIGN.CENTER
-                p.font.color.rgb = text_charcoal
-            p.font.name = 'Calibri'
-            p.font.size = Pt(10)
-
-    # Slide 9 Speaker Notes
     slide.notes_slide.notes_text_frame.text = (
-        "Here we look at downside tail risk. We calculated the 95% Daily Historical Value at Risk, "
-        "which measures the threshold loss limit, and Conditional VaR, which is the expected shortfall. "
-        "Notice the technology fund: it shows a daily VaR of 2.33% and a daily CVaR of 3.01%. "
-        "In simple terms, in the worst 5% of trading sessions, investors in this tech fund lose "
-        "an average of 3.01% of their capital in a single day. The diversified Mirae Asset Large Cap, "
-        "on the other hand, reduces this expected shortfall to 2.76%."
+        "The ETL script cleans data through duplicate removal, date normalization, and "
+        "missing value forward-fills. The database itself is structured as a STAR Schema in SQLite, "
+        "isolating masters into dimension tables and pricing details into transactional facts to enable fast querying."
     )
-
-    # ==================================================================
-    # SLIDE 10: COHORT ANALYSIS & SIP CONTINUITY
-    # ==================================================================
+    
+    # ------------------------------------------------------------------
+    # SLIDE 6: EDA HIGHLIGHTS
+    # ------------------------------------------------------------------
     slide = prs.slides.add_slide(blank_layout)
-    apply_slide_background(slide, bg_white)
-    add_slide_header(slide, "Investor Demographics & Cohort Analysis")
+    draw_content_geometry(slide, 6)
+    add_content_title(slide, "EDA Highlights")
     
-    # 2 Column Card Layout (Left: Cohorts, Right: SIP Continuity)
-    card_w2 = Inches(5.7)
-    card_h2 = Inches(4.5)
+    add_left_insight_zone(slide, "Statistical & Return Exploratory Findings", [
+        "Pearson Correlation Structure:",
+        "  • Large-cap equity funds exhibit extremely high return correlation (0.86 - 0.94), showing active portfolios heavily mirror indexes.",
+        "  • Tech sectoral funds (ICICI Tech) exhibit a 0.42 correlation, serving as a powerful diversification tool.",
+        "Ordinary Least Squares (OLS) Regression:",
+        "  • Regression of 3Y CAGR on Expense Ratios confirms a statistically significant negative fee drag on net compound growth.",
+        "Cash Flow Split:",
+        "  • SIPs make up 62.4% of transaction counts but only 28.1% of capital volume, while lumpsums drive 58.4% of total volume."
+    ])
     
-    # Left Card
-    create_card_shape(slide, Inches(0.75), Inches(1.8), card_w2, card_h2)
-    txt_l = slide.shapes.add_textbox(Inches(0.75), Inches(1.8), card_w2, card_h2)
-    tf_cl = txt_l.text_frame
-    tf_cl.word_wrap = True
-    tf_cl.margin_left = Inches(0.3)
-    tf_cl.margin_top = Inches(0.3)
+    # Right Side: Ingestion Table
+    headers_eda = ["Filename", "Raw Rows", "Final Rows", "Dupes Del", "Bad Dates"]
+    data_eda = []
+    for row in cleaning_raw[:5]:
+        data_eda.append([
+            row.get("filename", "").replace(".csv", ""),
+            row.get("raw_rows", "0"),
+            row.get("final_rows", "0"),
+            row.get("duplicates_removed", "0"),
+            row.get("bad_dates_removed", "0")
+        ])
+    draw_right_table(slide, len(data_eda) + 1, 5, Inches(6.5), Inches(1.6), Inches(5.8), Inches(4.5), headers_eda, data_eda)
     
-    p_clh = tf_cl.paragraphs[0]
-    p_clh.text = "Inflow Vintage Cohorts"
-    p_clh.font.name = 'Georgia'
-    p_clh.font.size = Pt(16)
-    p_clh.font.bold = True
-    p_clh.font.color.rgb = text_black
-    
-    p_clb = tf_cl.add_paragraph()
-    p_clb.text = (
-        "Cohort analysis groups clients by their first transaction date to evaluate retention and capital stickiness:\n\n"
-        "• Core Inflow Vintages:\n"
-        "The Q1 2022 and Q3 2023 cohorts represent the largest aggregate client capital inflows, coinciding with major market pullbacks.\n\n"
-        "• Redemption Behaviors:\n"
-        "Clients with Aggressive risk profiles show high retention. Conversely, Conservative accounts show a 24% redemption increase during periods of negative index returns, highlighting behavioral panic."
-    )
-    p_clb.font.name = 'Calibri'
-    p_clb.font.size = Pt(10.5)
-    p_clb.font.color.rgb = text_charcoal
-    p_clb.space_before = Pt(10)
-    p_clb.line_spacing = 1.25
-    
-    # Right Card
-    create_card_shape(slide, Inches(6.88), Inches(1.8), card_w2, card_h2)
-    txt_r = slide.shapes.add_textbox(Inches(6.88), Inches(1.8), card_w2, card_h2)
-    tf_cr = txt_r.text_frame
-    tf_cr.word_wrap = True
-    tf_cr.margin_left = Inches(0.3)
-    tf_cr.margin_top = Inches(0.3)
-    
-    p_crh = tf_cr.paragraphs[0]
-    p_crh.text = "SIP Continuity & Churn Streaks"
-    p_crh.font.name = 'Georgia'
-    p_crh.font.size = Pt(16)
-    p_crh.font.bold = True
-    p_crh.font.color.rgb = text_black
-    
-    p_crb = tf_cr.add_paragraph()
-    p_crb.text = (
-        "We evaluate Systematic Investment Plan (SIP) stickiness by comparing actual vs. expected payments:\n\n"
-        "• Active SIP Folios: Show an impressive 87.2% continuity rate. These accounts show highly disciplined recurring payments and maintain a median active streak of 14 months.\n\n"
-        "• Inactive SIP Folios: Show a low continuity rate of 14.5%. Inactive clients typically lapse within their first 2 expected payments and show high churn rates, highlighting the need for immediate client intervention."
-    )
-    p_crb.font.name = 'Calibri'
-    p_crb.font.size = Pt(10.5)
-    p_crb.font.color.rgb = text_charcoal
-    p_crb.space_before = Pt(10)
-    p_crb.line_spacing = 1.25
-
-    # Slide 10 Speaker Notes
     slide.notes_slide.notes_text_frame.text = (
-        "Understanding investor behavior is critical. In our cohort analysis on the left, we found "
-        "that conservative retail investors show elevated redemptions during market pullbacks. "
-        "On the right, we explore SIP continuity. Active systematic accounts display a high "
-        "87.2% continuity rate. However, inactive folios lapse very early, typically within the first "
-        "two months. This indicates that if a client misses their second payment, they are highly likely "
-        "to churn permanently, pointing to a key window for automated client interventions."
+        "Our exploratory data analysis reveals two key trends: the return correlation between large-caps "
+        "is extremely high, while sectoral tech funds provide diversification. We also verified the "
+        "negative drag of expense ratios on CAGR using OLS regression. The table on the right displays the "
+        "data ingestion metrics from our raw operational log."
     )
-
-    # ==================================================================
-    # SLIDE 11: BI DASHBOARD BLUEPRINT
-    # ==================================================================
-    slide = prs.slides.add_slide(blank_layout)
-    apply_slide_background(slide, bg_white)
-    add_slide_header(slide, "Executive BI Dashboard Specification")
     
-    # 4 horizontal card blocks (each page)
-    block_h = Inches(0.95)
-    block_gap = Inches(0.18)
+    # ------------------------------------------------------------------
+    # SLIDE 7: PERFORMANCE ANALYTICS
+    # ------------------------------------------------------------------
+    slide = prs.slides.add_slide(blank_layout)
+    draw_content_geometry(slide, 7)
+    add_content_title(slide, "Performance Analytics")
+    
+    add_left_insight_zone(slide, "Multi-Factor Scoring Leaderboard", [
+        "The weighted performance scorecard evaluates five risk-return factors:",
+        "• 3-Year CAGR (30% weight) - Compound growth",
+        "• Sharpe Ratio (25% weight, Risk-Free Rate = 6.5%)",
+        "• CAPM Alpha (20% weight, Benchmark: Nifty 100)",
+        "• Expense Ratio (15% weight, inverse)",
+        "• Max Drawdown (10% weight, inverse)",
+        "",
+        "Results: DSP Top 100 ranks #1 (Sharpe 1.22), Mirae Large Cap ranks #2 (Max DD -17.47%)."
+    ])
+    
+    # Right Side: Scorecard Table
+    headers_score = ["Rank", "Scheme Name", "3Y CAGR", "Sharpe", "Alpha", "Max DD", "Expense"]
+    data_score = []
+    for row in scorecard_data[:6]:
+        data_score.append([
+            f"#{row['rank']}",
+            row["name"],
+            f"{row['cagr_3y']:.1%}",
+            f"{row['sharpe']:.2f}",
+            f"{row['alpha']:.1%}",
+            f"{row['max_dd']:.1%}",
+            f"{row['expense']:.2%}"
+        ])
+    col_w = [Inches(0.6), Inches(2.0), Inches(0.8), Inches(0.6), Inches(0.6), Inches(0.6), Inches(0.6)]
+    draw_right_table(slide, len(data_score) + 1, 7, Inches(6.5), Inches(1.6), Inches(5.8), Inches(4.5), headers_score, data_score, col_w)
+    
+    slide.notes_slide.notes_text_frame.text = (
+        "Here are the scorecard results. We rank schemes using a weighted multi-factor model (CAGR, "
+        "Sharpe, CAPM Alpha, Expense, and Drawdown). DSP Top 100 Equity ranks first due to its outstanding "
+        "39.8% CAGR and 28.8% active Alpha, followed closely by Mirae Asset Large Cap, which exhibits "
+        "superior capital protection."
+    )
+    
+    # ------------------------------------------------------------------
+    # SLIDE 8: ADVANCED RISK METRICS
+    # ------------------------------------------------------------------
+    slide = prs.slides.add_slide(blank_layout)
+    draw_content_geometry(slide, 8)
+    add_content_title(slide, "Advanced Risk Metrics")
+    
+    add_left_insight_zone(slide, "Sector Concentration & Tail Risks", [
+        "Herfindahl-Hirschman Index (HHI):",
+        "  • Measures sector concentration. Scores above 2,500 represent concentrated portfolios.",
+        "Daily Value at Risk (95% VaR):",
+        "  • The threshold loss that will not be exceeded with 95% confidence on any trading day.",
+        "Daily Conditional VaR (95% CVaR / Expected Shortfall):",
+        "  • The average expected loss during the worst 5% of trading days.",
+        "Finding: ICICI Tech exhibits highest HHI (7,288), driving daily VaR to 2.33% and daily CVaR to 3.01%."
+    ])
+    
+    # Right Side: Risk Table
+    headers_risk = ["Scheme Name", "Daily VaR", "Daily CVaR", "Sector HHI", "Class"]
+    data_risk = []
+    for row in combined_risk_data[:5]:
+        data_risk.append([
+            row["name"],
+            f"{row['var_95']:.2%}",
+            f"{row['cvar_95']:.2%}",
+            f"{row['hhi']:.2f}",
+            row["concentration"]
+        ])
+    col_w_risk = [Inches(1.8), Inches(0.8), Inches(0.8), Inches(0.8), Inches(1.6)]
+    draw_right_table(slide, len(data_risk) + 1, 5, Inches(6.5), Inches(1.6), Inches(5.8), Inches(4.5), headers_risk, data_risk, col_w_risk)
+    
+    slide.notes_slide.notes_text_frame.text = (
+        "This slide evaluates downside tail risk. High sector concentration in the tech sectoral fund "
+        "(HHI of 7,288) amplifies expected losses, resulting in a daily CVaR of 3.01%. Diversified large-caps "
+        "like Mirae Large Cap maintain moderate HHI scores near 1,827 and lower their daily CVaR to 2.76%."
+    )
+    
+    # ------------------------------------------------------------------
+    # SLIDE 9: INVESTOR BEHAVIOUR ANALYTICS
+    # ------------------------------------------------------------------
+    slide = prs.slides.add_slide(blank_layout)
+    draw_content_geometry(slide, 9)
+    add_content_title(slide, "Investor Behaviour Analytics")
+    
+    add_left_insight_zone(slide, "Cohort Vintage Flows & SIP Continuity", [
+        "Cohort Vintage Flows:",
+        "  • Capital vintage tracking groups clients by their first transaction date. Major inflows occur during market pullbacks.",
+        "SIP Continuity Rates:",
+        "  • Active systematic folios exhibit an 87.2% continuity rate, showing highly disciplined recurring payments.",
+        "  • Inactive folios display a 14.5% rate, typically lapsing in month 2.",
+        "Redemption Panic:",
+        "  • Conservative accounts show a 24% increase in redemptions during negative return periods, suggesting emotional selling."
+    ])
+    
+    # Right Side: Cohort Table
+    headers_cohort = ["Cohort", "Users", "Inflow (Cr)", "Outflow (Cr)", "Net (Cr)"]
+    data_cohort = []
+    for row in cohort_raw[:5]:
+        try:
+            inflow = float(row.get("total_inflow_inr", 0)) / 10000000.0
+            outflow = float(row.get("total_outflow_inr", 0)) / 10000000.0
+            net_in = float(row.get("net_inflow_inr", 0)) / 10000000.0
+            data_cohort.append([
+                row.get("cohort_quarter", ""),
+                row.get("unique_investors", "0"),
+                f"{inflow:.2f} Cr",
+                f"{outflow:.2f} Cr",
+                f"{net_in:.2f} Cr"
+            ])
+        except Exception:
+            pass
+    draw_right_table(slide, len(data_cohort) + 1, 5, Inches(6.5), Inches(1.6), Inches(5.8), Inches(4.5), headers_cohort, data_cohort)
+    
+    slide.notes_slide.notes_text_frame.text = (
+        "We trace retail client retention vintage flows and SIP continuity rates. Active systematic folios "
+        "show a highly sticky 87.2% continuity rate, whereas inactive accounts drop off extremely early, "
+        "typically by their second expected payment. This provides a clear target for early client engagement."
+    )
+    
+    # ------------------------------------------------------------------
+    # SLIDE 10: DASHBOARD OVERVIEW
+    # ------------------------------------------------------------------
+    slide = prs.slides.add_slide(blank_layout)
+    draw_content_geometry(slide, 10)
+    add_content_title(slide, "Dashboard Overview")
+    
+    add_left_insight_zone(slide, "Power BI Visual Specifications", [
+        "Theme Design & Canvas:",
+        "  • Visual Background: Deep Charcoal (#1E2235)",
+        "  • Dashboard Canvas Background: Deep Carbon (#0F111A)",
+        "  • Key Accent Colors: Cyan (#00E5FF) and Emerald Green (#00E676)",
+        "Layout Structure:",
+        "  • Standard Segoe UI typography for clean metric numbers.",
+        "  • Optimized custom DAX views to prevent client-side join lag."
+    ])
+    
+    # Right Side: 4 Grid Cards representing each dashboard page
+    grid_left = Inches(6.5)
+    grid_w = Inches(2.8)
+    grid_h = Inches(2.1)
+    grid_gap_x = Inches(0.2)
+    grid_gap_y = Inches(0.2)
     
     pages = [
-        ("PAGE 1: INDUSTRY OVERVIEW", "KPI cards showing total Industry AUM (₹24,850 Cr) and Active Folios (1.42M). Tracks monthly inflows and maps AMC market share concentration (HDFC vs. SBI) using a Treemap.", text_black),
-        ("PAGE 2: FUND PERFORMANCE", "Risk-Return scatter plot (X-axis = Beta, Y-axis = 3Y CAGR, Bubble size = AUM). Includes a dynamic line chart comparing scheme returns to the Nifty 100 benchmark (re-indexed to ₹100), and a scorecard leaderboard grid.", text_black),
-        ("PAGE 3: INVESTOR ANALYTICS", "Includes an Indian geographical shape map showing investment totals, a transaction type distribution donut chart (SIP vs. Lumpsum vs. Redemption), and an age cohort column chart.", text_black),
-        ("PAGE 4: SIP & MARKET TRENDS", "Dual-Y Axis line chart comparing monthly SIP inflows with the Nifty 50 close price, and a quarterly net inflow heatmap by fund category.", text_black)
+        ("PAGE 1: INDUSTRY", ["Total Industry AUM (₹24,850 Cr)", "Monthly inflows", "AMC market shares"], Inches(6.5), Inches(1.6)),
+        ("PAGE 2: PERFORMANCE", ["Risk-return scatter (Beta vs CAGR)", "Index line comparisons", "Scorecard Leaderboard"], Inches(9.5), Inches(1.6)),
+        ("PAGE 3: INVESTORS", ["Indian geographical map", "Transaction type share", "Age cohort distribution"], Inches(6.5), Inches(3.9)),
+        ("PAGE 4: SIP TRENDS", ["SIP inflows vs Nifty 50 close", "Net inflow quarterly heatmap", "Historical SIP continuity"], Inches(9.5), Inches(3.9))
     ]
     
-    for idx, (title, desc, color) in enumerate(pages):
-        y_pos = Inches(1.8) + idx * (block_h + block_gap)
-        create_card_shape(slide, Inches(0.75), y_pos, block_w, block_h)
+    for title, desc, x, y in pages:
+        create_right_card(slide, x, y, grid_w, grid_h, title, desc, COLOR_LIGHT_BLUE)
         
-        txt_box = slide.shapes.add_textbox(Inches(0.75), y_pos, block_w, block_h)
-        tf_b = txt_box.text_frame
-        tf_b.word_wrap = True
-        tf_b.margin_left = Inches(0.3)
-        tf_b.margin_right = Inches(0.3)
-        tf_b.margin_top = Inches(0.12)
-        
-        p_t = tf_b.paragraphs[0]
-        p_t.text = title
-        p_t.font.name = 'Georgia'
-        p_t.font.size = Pt(13)
-        p_t.font.bold = True
-        p_t.font.color.rgb = color
-        
-        p_d = tf_b.add_paragraph()
-        p_d.text = desc
-        p_d.font.name = 'Calibri'
-        p_d.font.size = Pt(9.5)
-        p_d.font.color.rgb = text_charcoal
-        p_d.space_before = Pt(2)
-
-    # Slide 11 Speaker Notes
     slide.notes_slide.notes_text_frame.text = (
-        "We designed a widescreen Power BI layout spec to display these calculations. "
+        "We developed a widescreen Power BI layout spec to display these calculations. "
         "Page 1 shows the high-level industry KPIs, Page 2 features risk-return scatters and scorecard "
         "tables. Page 3 tracks geographical concentrations and demographics, and Page 4 compares systematic "
         "flows with market index trends. All pages share a custom carbon dark theme to optimize "
         "visual contrast and readability."
     )
-
-    # ==================================================================
-    # SLIDE 12: STRATEGIC RECOMMENDATIONS
-    # ==================================================================
-    slide = prs.slides.add_slide(blank_layout)
-    apply_slide_background(slide, bg_white)
-    add_slide_header(slide, "Strategic Recommendations & Action Plan")
     
-    # 3 column cards (clean monochrome)
-    problems_r = [
-        ("01", "SECTOR HHI CONCENTRATION LIMITS", 
-         "Implement hard advisory guardrails. When a client's composite portfolio sector HHI exceeds 2,500, trigger automated rebalancing alerts to mitigate severe tail-risk losses associated with concentrated sector exposures.",
-         Inches(0.75)),
-        ("02", "SYSTEMATIC PRODUCTS RETENTION", 
-         "Focus marketing spend on systematic investment plans (SIPs), which show an 87.2% continuity rate. Configure automated retention emails when a retail client misses their second expected monthly payment.",
-         Inches(4.82)),
-        ("03", "LARGE CAP PORTFOLIO ANCHORING", 
-         "For conservative retail portfolios, anchor client allocations with at least a 60% weight in diversified Large Cap funds. This buffers drawdowns and maintains peak-to-trough losses above the -20% threshold.",
-         Inches(8.89))
+    # ------------------------------------------------------------------
+    # SLIDE 11: KEY FINDINGS & RECOMMENDATIONS
+    # ------------------------------------------------------------------
+    slide = prs.slides.add_slide(blank_layout)
+    draw_content_geometry(slide, 11)
+    add_content_title(slide, "Key Findings & Recommendations")
+    
+    add_left_insight_zone(slide, "Strategic Advisory Controls", [
+        "• Sector concentration controls (HHI Guardrails): Portfolios holding concentrated sectoral funds (like ICICI Technology, HHI > 7,000) show high daily expected shortfalls. Advisors should trigger warnings when portfolio sector HHI exceeds 2,500.",
+        "• Systematic plan (SIP) retentions: Push recurring SIP products which exhibit 87.2% continuity. Configure automated campaigns when client misses their second expected payment.",
+        "• Large Cap anchors for conservative clients: Anchor conservative accounts with a 60% allocation in diversified Large Cap funds to contain drawdowns above -20%."
+    ])
+    
+    # Right Side: Action Plan Cards
+    card_yr = Inches(1.8)
+    card_hr = Inches(2.0)
+    card_gapr = Inches(0.4)
+    
+    rec_cards = [
+        ("01 / HHI ALERTS", ["Limit sector concentration to protect capital against sudden drawdowns.", "Trigger advisory system rebalancing flags when composite HHI > 2,500."], Inches(1.6)),
+        ("02 / RETENTION TRIGGERS", ["Automatically target systematic outreach to clients after their first missed SIP payment.", "Configure early-stage interventions before month 2 to prevent permanent churn."], Inches(3.9))
     ]
     
-    for num, header, desc, x_pos in problems_r:
-        create_card_shape(slide, x_pos, card_y, card_width, card_height)
+    for title, lines, top_pos in rec_cards:
+        create_right_card(slide, Inches(6.5), top_pos, Inches(5.8), Inches(2.0), title, lines)
         
-        txt_box = slide.shapes.add_textbox(x_pos, card_y, card_width, card_height)
-        tf_c = txt_box.text_frame
-        tf_c.word_wrap = True
-        tf_c.margin_left = Inches(0.25)
-        tf_c.margin_right = Inches(0.25)
-        tf_c.margin_top = Inches(0.25)
-        
-        p_num = tf_c.paragraphs[0]
-        p_num.text = num
-        p_num.font.name = 'Georgia'
-        p_num.font.size = Pt(28)
-        p_num.font.bold = True
-        p_num.font.color.rgb = text_gray
-        
-        p_hdr = tf_c.add_paragraph()
-        p_hdr.text = header
-        p_hdr.font.name = 'Georgia'
-        p_hdr.font.size = Pt(13)
-        p_hdr.font.bold = True
-        p_hdr.font.color.rgb = text_black
-        p_hdr.space_before = Pt(10)
-        p_hdr.space_after = Pt(12)
-        
-        p_desc = tf_c.add_paragraph()
-        p_desc.text = desc
-        p_desc.font.name = 'Calibri'
-        p_desc.font.size = Pt(10.5)
-        p_desc.font.color.rgb = text_charcoal
-        p_desc.line_spacing = 1.25
-
-    # Slide 12 Speaker Notes
     slide.notes_slide.notes_text_frame.text = (
-        "Finally, we translate our advisory calculations into three concrete recommendations. "
-        "First, implement automated portfolio alerts when HHI exceeds 2,500 to control concentration risk. "
-        "Second, direct retail campaign resources to recurring systematic SIPs and trigger follow-up "
-        "calls for missed early payments. Third, anchor conservative clients with a 60% large-cap core "
-        "to limit historical peak-to-trough drawdowns above a -20% floor. Thank you, and I am open to any questions."
+        "Finally, we translate our calculations into three concrete strategic recommendations: "
+        "implement automated rebalancing flags for HHI > 2,500, configure early missed SIP email campaigns, "
+        "and anchor conservative portfolios with a 60% large-cap core to contain drawdowns above -20%."
     )
-
+    
+    # ------------------------------------------------------------------
+    # SLIDE 12: THANK YOU
+    # ------------------------------------------------------------------
+    slide = prs.slides.add_slide(blank_layout)
+    draw_content_geometry(slide, 12)
+    add_content_title(slide, "Thank You")
+    
+    add_left_insight_zone(slide, "Mutual Fund Analytics Platform", [
+        "The mutual fund analytics relational SQLite schema, ETL cleaning pipelines, scoring scoreboard, and tail risk engines are fully operational and ready for deployment.",
+        "",
+        "Open to Questions and Discussion."
+    ])
+    
+    # Right Side: Contact Box
+    create_right_card(
+        slide, Inches(6.5), Inches(1.6), Inches(5.8), Inches(4.5),
+        "CONTACT & REFERENCES",
+        [
+            "Presenter: Dhileep B, Lead Financial Data Analyst",
+            "Organization: Bluestock Portfolio Management Advisory Services",
+            "",
+            "Handouts Available:",
+            "  • Technical Paper: reports/Final_Report.pdf (9 Pages)",
+            "  • Presentation: reports/Presentation.pptx (12 Slides)",
+            "  • Ingestion Schema: sql/schema.sql",
+            "",
+            "Workspace Codebase: bluestock_capstone_project"
+        ]
+    )
+    
+    slide.notes_slide.notes_text_frame.text = (
+        "Thank you for your time. The analytics engine is fully operational and integrated with SQLite. "
+        "We are open to questions and discussions on database structures or risk modeling calibrations."
+    )
+    
     prs.save(str(filename))
     print(f"Successfully generated humanized PPTX deck at: {filename}")
-
 
 # ----------------------------------------------------------------------
 # 4. MAIN ORCHESTRATION ENTRY
